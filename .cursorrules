@@ -1,0 +1,263 @@
+FHRMS Frontend – Cursor Rules
+1. Project Context (Very Important)
+
+This is a frontend-only EHR application
+
+Backend logic, database design, and security rules are out of scope
+
+The UI must be clinical, professional, and accessible
+
+Target users: doctors, nurses, pharmacists, records officers, admins
+
+Cursor must never invent backend logic.
+
+2. Tech Stack Rules (Strict)
+
+Framework: Next.js (App Router)
+
+Language: TypeScript only
+
+Styling: Tailwind CSS v4
+
+UI components: shadcn/ui
+
+Icons: lucide-react
+
+Linting: ESLint
+
+No CSS-in-JS libraries
+
+No inline styles unless absolutely necessary
+
+❌ Do NOT introduce:
+
+styled-components
+
+Material UI
+
+Chakra UI
+
+React Icons
+
+Font Awesome
+
+3. Next.js Rules
+
+Use App Router (/app) only
+
+Prefer Server Components by default
+
+Use "use client" only when required:
+
+forms
+
+modals
+
+interactive tables
+
+No deprecated pages/ patterns
+
+4. TypeScript Rules (Strict)
+
+No any
+
+No unknown without proper narrowing
+
+Always define explicit types for:
+
+props
+
+API responses
+
+state
+
+Prefer type over interface unless extension is required
+
+Example rule:
+
+If a type is unclear, define a new type — do not guess.
+
+5. Component Design Rules
+
+Components must be:
+
+Small
+
+Reusable
+
+Single-responsibility
+
+Structure:
+
+components/
+  ui/        → shadcn components
+  layout/    → Sidebar, Topbar
+  patients/
+  encounters/
+
+
+❌ No god-components
+❌ No 500-line components
+
+6. Styling Rules (Tailwind 4)
+
+Use Tailwind utility classes only
+
+No custom CSS unless unavoidable
+
+Prefer design tokens:
+
+spacing
+
+typography
+
+colors
+
+Follow clinical readability standards:
+
+Body text: 16px
+
+H1: 24–28px
+
+Minimum text size: 14px
+
+❌ No tiny text
+❌ No flashy gradients
+❌ No playful colors
+
+7. shadcn/ui Rules
+
+Use shadcn components as base primitives
+
+Customize via Tailwind classes, not rewrites
+
+Do not duplicate existing shadcn components
+
+Example:
+
+If a Button exists, extend it — don’t recreate it.
+
+8. Icons Rules
+
+Use lucide-react only
+
+Icons must be:
+
+16–20px for buttons
+
+20–24px for sidebar
+
+Icons must always have text labels in navigation
+
+❌ No icon-only navigation for critical actions
+
+9. Accessibility Rules (Mandatory)
+
+All inputs must have labels
+
+Buttons must have visible text or aria-label
+
+Tables must use semantic HTML
+
+Color contrast must be readable
+
+Healthcare UI requires clarity over density.
+
+10. State & Data Rules
+
+This project uses mock data or API placeholders
+
+Cursor must not:
+
+invent Firestore schemas
+
+invent backend endpoints
+
+Use /services for API calls
+
+Use /types for shared types
+
+11. Error Handling & UX
+
+Always include:
+
+loading states
+
+empty states
+
+error states
+
+Never silently fail
+
+Confirm destructive actions
+
+12. Naming Conventions
+
+Components: PascalCase
+
+Files: kebab-case.tsx
+
+Types: PascalCase
+
+Variables: camelCase
+
+No abbreviations that reduce clarity.
+
+13. Code Quality Rules
+
+Prefer clarity over cleverness
+
+No unnecessary abstractions
+
+No premature optimization
+
+Comments only when logic is non-obvious
+
+Cursor should generate readable human code, not AI-looking code.
+
+14. Domain Rules (FHRMS-Specific)
+
+Use healthcare terminology correctly:
+
+Patient (not user)
+
+Encounter (not visit record)
+
+Clinician (not doctor everywhere)
+
+Never hardcode medical values
+
+Federated Patient ID is read-only in UI
+
+15. Final Rule (Very Important)
+
+If unsure, ask for clarification instead of guessing.
+
+Cursor must not invent requirements.
+
+Project-specific UI rules:
+
+- STRICTLY use the existing color variables defined in the project.
+- Never introduce new colors, hex values, or Tailwind color utilities.
+- Always reference colors via the existing CSS variables or Tailwind tokens.
+- Do not modify the color system unless explicitly instructed.
+
+Component refactoring rules:
+- Prefer shadcn/ui components over custom components where possible.
+- When converting components, preserve existing layout, spacing, and colors.
+- Do not break existing props or public APIs unless necessary.
+
+Dashboard rules:
+- The dashboard is the design and behavior reference for all other pages.
+- All future pages must follow the same layout structure, spacing scale, and component patterns.
+- Fix unfinished or broken behaviors (buttons, tabs, dropdowns, modals, charts).
+
+Behavior rules:
+- Ensure all UI interactions work as expected.
+- No dead UI elements (every button must have a purpose or handler).
+- Add missing state and handlers where behavior is implied.
+
+Output rules:
+- Make incremental changes, not full rewrites.
+- Do not remove working features.
+- Prioritize correctness and consistency over creativity.
