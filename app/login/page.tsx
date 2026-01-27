@@ -115,12 +115,13 @@ export default function LoginPage() {
                     Remember me
                   </Label>
                 </div>
-                <a
-                  href="#"
+                <button
+                  type="button"
+                  onClick={() => console.log("Forgot password")}
                   className="text-sm text-primary hover:text-primary-hover font-medium"
                 >
                   Forgot password?
-                </a>
+                </button>
               </div>
 
               {/* Submit Button */}

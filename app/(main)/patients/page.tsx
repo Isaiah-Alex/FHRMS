@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,18 +36,22 @@ import { TableCell } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 
 const PAGE_SIZE = 10;
+const STORAGE_KEY = "fhrmsPatients";
+const TOAST_KEY = "fhrmsPatientToast";
 
 export default function PatientsPage() {
+  const [patients, setPatients] = useState<Patient[]>(mockPatients);
   const [searchQuery, setSearchQuery] = useState("");
   const [sexFilter, setSexFilter] = useState<string>("all");
   const [ageRangeFilter, setAgeRangeFilter] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const debouncedSearch = useDebouncer(searchQuery, 300);
 
   // Filter and search logic
   const filteredPatients = useMemo(() => {
-    let result = mockPatients;
+    let result = patients;
 
     // Search by name or patient ID
     if (debouncedSearch) {
@@ -84,7 +88,7 @@ export default function PatientsPage() {
     }
 
     return result;
-  }, [debouncedSearch, sexFilter, ageRangeFilter]);
+  }, [debouncedSearch, sexFilter, ageRangeFilter, patients]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredPatients.length / PAGE_SIZE);
@@ -100,15 +104,37 @@ export default function PatientsPage() {
     setCurrentPage(1);
   };
 
-  const router = useRouter()
+  const router = useRouter();
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored) as Patient[];
+        setPatients(parsed);
+      } catch {
+        setPatients(mockPatients);
+      }
+    }
+
+    const toast = window.sessionStorage.getItem(TOAST_KEY);
+    if (toast) {
+      setToastMessage(toast);
+      window.sessionStorage.removeItem(TOAST_KEY);
+      const timeout = window.setTimeout(() => {
+        setToastMessage(null);
+      }, 3000);
+      return () => window.clearTimeout(timeout);
+    }
+    return undefined;
+  }, []);
   const handleViewProfile = (patientId: string) => {
     router.push(`/patients/${patientId}`);
     
   };
 
   const handleRegisterPatient = () => {
-    console.log("Register new patient");
-    // Navigation or modal logic will go here
+    router.push("/patients/register");
   };
 
   return (
@@ -146,7 +172,7 @@ export default function PatientsPage() {
           </div>
 
           <Select value={sexFilter} onValueChange={(value) => handleFilterChange(setSexFilter, value)}>
-            <SelectTrigger className="w-full md:w-45">
+          <SelectTrigger className="w-full md:w-[180px]">
               <SelectValue placeholder="Sex" />
             </SelectTrigger>
             <SelectContent>
@@ -158,7 +184,7 @@ export default function PatientsPage() {
           </Select>
 
           <Select value={ageRangeFilter} onValueChange={(value) => handleFilterChange(setAgeRangeFilter, value)}>
-            <SelectTrigger className="w-full md:w-45">
+          <SelectTrigger className="w-full md:w-[180px]">
               <SelectValue placeholder="Age Range" />
             </SelectTrigger>
             <SelectContent>
@@ -266,6 +292,21 @@ export default function PatientsPage() {
           </Pagination>
         )}
       </div>
+
+      {toastMessage && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-top-2 duration-300">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border bg-primary/90 text-primary-light">
+            <span className="font-medium">{toastMessage}</span>
+            <button
+              onClick={() => setToastMessage(null)}
+              className="ml-2 text-primary-light"
+              aria-label="Close notification"
+            >
+              x
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

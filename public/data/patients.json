@@ -2,8 +2,8 @@
     "patients": [
         {
             "id": "2321-0001",
-            "name": "John Doe",
-            "email": "john.doe@example.com",
+            "name": "Chinedu Okafor",
+            "email": "chinedu.okafor@example.com",
             "phone": "555-0101",
             "dateOfBirth": "1980-05-15",
             "gender": "M",
@@ -15,8 +15,8 @@
         },
         {
             "id": "2321-0002",
-            "name": "Jane Smith",
-            "email": "jane.smith@example.com",
+            "name": "Aisha Bello",
+            "email": "aisha.bello@example.com",
             "phone": "555-0102",
             "dateOfBirth": "1992-08-22",
             "gender": "F",
@@ -28,8 +28,8 @@
         },
         {
             "id": "2321-0003",
-            "name": "Michael Johnson",
-            "email": "michael.johnson@example.com",
+            "name": "Tunde Adeyemi",
+            "email": "tunde.adeyemi@example.com",
             "phone": "555-0103",
             "dateOfBirth": "1975-03-10",
             "gender": "M",
@@ -41,8 +41,8 @@
         },
         {
             "id": "2321-0004",
-            "name": "Sarah Williams",
-            "email": "sarah.williams@example.com",
+            "name": "Ifeoma Nwosu",
+            "email": "ifeoma.nwosu@example.com",
             "phone": "555-0104",
             "dateOfBirth": "1988-11-30",
             "gender": "F",
@@ -54,8 +54,8 @@
         },
         {
             "id": "2321-0005",
-            "name": "David Brown",
-            "email": "david.brown@example.com",
+            "name": "Emeka Eze",
+            "email": "emeka.eze@example.com",
             "phone": "555-0105",
             "dateOfBirth": "1965-07-18",
             "gender": "M",
@@ -67,8 +67,8 @@
         },
         {
             "id": "2321-0006",
-            "name": "Emily Davis",
-            "email": "emily.davis@example.com",
+            "name": "Kemi Adebayo",
+            "email": "kemi.adebayo@example.com",
             "phone": "555-0106",
             "dateOfBirth": "1998-01-25",
             "gender": "F",

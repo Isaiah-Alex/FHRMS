@@ -1,4 +1,4 @@
-// Comprehensive Mock Database - Acts as a single source of truth
+﻿// Comprehensive Mock Database - Acts as a single source of truth
 // This file consolidates all mock data that would normally come from a database
 
 // ================================
@@ -102,6 +102,16 @@ export type Encounter = {
     status: "active" | "completed";
 };
 
+export type MedicalHistoryEntry = {
+    id: string;
+    patientId: string;
+    date: string;
+    condition: string;
+    status: "active" | "resolved" | "chronic";
+    notes: string;
+    recordedBy: string;
+};
+
 export type VitalRecord = {
     id: string;
     patientId: string;
@@ -152,8 +162,8 @@ export type VitalsSummary = {
 export const patients: Patient[] = [
     {
         id: "1",
-        firstName: "John",
-        lastName: "Doe",
+        firstName: "Chinedu",
+        lastName: "Okafor",
         sex: "Male",
         age: 45,
         patientId: "PT-2024-001",
@@ -183,8 +193,8 @@ export const patients: Patient[] = [
     },
     {
         id: "2",
-        firstName: "Jane",
-        lastName: "Smith",
+        firstName: "Aisha",
+        lastName: "Bello",
         sex: "Female",
         age: 32,
         patientId: "PT-2024-002",
@@ -214,8 +224,8 @@ export const patients: Patient[] = [
     },
     {
         id: "3",
-        firstName: "Michael",
-        lastName: "Johnson",
+        firstName: "Tunde",
+        lastName: "Adeyemi",
         sex: "Male",
         age: 58,
         patientId: "PT-2024-003",
@@ -245,8 +255,8 @@ export const patients: Patient[] = [
     },
     {
         id: "4",
-        firstName: "Emily",
-        lastName: "Williams",
+        firstName: "Ifeoma",
+        lastName: "Nwosu",
         sex: "Female",
         age: 27,
         patientId: "PT-2024-004",
@@ -276,8 +286,8 @@ export const patients: Patient[] = [
     },
     {
         id: "5",
-        firstName: "David",
-        lastName: "Brown",
+        firstName: "Emeka",
+        lastName: "Eze",
         sex: "Male",
         age: 41,
         patientId: "PT-2024-005",
@@ -308,8 +318,8 @@ export const patients: Patient[] = [
     // Continue for patients 6-25 with similar pattern
     {
         id: "6",
-        firstName: "Sarah",
-        lastName: "Davis",
+        firstName: "Kemi",
+        lastName: "Adebayo",
         sex: "Female",
         age: 35,
         patientId: "PT-2024-006",
@@ -341,8 +351,8 @@ export const patients: Patient[] = [
 
     {
         id: "7",
-        firstName: "James",
-        lastName: "Miller",
+        firstName: "Bamidele",
+        lastName: "Ogunleye",
         sex: "Male",
         age: 63,
         patientId: "PT-2024-007",
@@ -372,8 +382,8 @@ export const patients: Patient[] = [
     },
     {
         id: "8",
-        firstName: "Maria",
-        lastName: "Garcia",
+        firstName: "Zainab",
+        lastName: "Abdullahi",
         sex: "Female",
         age: 29,
         patientId: "PT-2024-008",
@@ -403,8 +413,8 @@ export const patients: Patient[] = [
     },
     {
         id: "9",
-        firstName: "Robert",
-        lastName: "Martinez",
+        firstName: "Uche",
+        lastName: "Obi",
         sex: "Male",
         age: 50,
         patientId: "PT-2024-009",
@@ -434,8 +444,8 @@ export const patients: Patient[] = [
     },
     {
         id: "10",
-        firstName: "Lisa",
-        lastName: "Anderson",
+        firstName: "Ngozi",
+        lastName: "Okoro",
         sex: "Female",
         age: 38,
         patientId: "PT-2024-010",
@@ -465,8 +475,8 @@ export const patients: Patient[] = [
     },
     {
         id: "11",
-        firstName: "Christopher",
-        lastName: "Taylor",
+        firstName: "Ibrahim",
+        lastName: "Musa",
         sex: "Male",
         age: 44,
         patientId: "PT-2024-011",
@@ -496,8 +506,8 @@ export const patients: Patient[] = [
     },
     {
         id: "12",
-        firstName: "Amanda",
-        lastName: "Thomas",
+        firstName: "Amaka",
+        lastName: "Nwachukwu",
         sex: "Female",
         age: 31,
         patientId: "PT-2024-012",
@@ -527,8 +537,8 @@ export const patients: Patient[] = [
     },
     {
         id: "13",
-        firstName: "Daniel",
-        lastName: "Moore",
+        firstName: "Segun",
+        lastName: "Balogun",
         sex: "Male",
         age: 55,
         patientId: "PT-2024-013",
@@ -558,8 +568,8 @@ export const patients: Patient[] = [
     },
     {
         id: "14",
-        firstName: "Jessica",
-        lastName: "Jackson",
+        firstName: "Hadiza",
+        lastName: "Sule",
         sex: "Female",
         age: 26,
         patientId: "PT-2024-014",
@@ -589,8 +599,8 @@ export const patients: Patient[] = [
     },
     {
         id: "15",
-        firstName: "Matthew",
-        lastName: "White",
+        firstName: "Nnamdi",
+        lastName: "Eze",
         sex: "Male",
         age: 47,
         patientId: "PT-2024-015",
@@ -620,8 +630,8 @@ export const patients: Patient[] = [
     },
     {
         id: "16",
-        firstName: "Ashley",
-        lastName: "Harris",
+        firstName: "Fatima",
+        lastName: "Yusuf",
         sex: "Female",
         age: 33,
         patientId: "PT-2024-016",
@@ -651,8 +661,8 @@ export const patients: Patient[] = [
     },
     {
         id: "17",
-        firstName: "Joshua",
-        lastName: "Martin",
+        firstName: "Kunle",
+        lastName: "Ojo",
         sex: "Male",
         age: 52,
         patientId: "PT-2024-017",
@@ -682,8 +692,8 @@ export const patients: Patient[] = [
     },
     {
         id: "18",
-        firstName: "Melissa",
-        lastName: "Thompson",
+        firstName: "Chiamaka",
+        lastName: "Iloh",
         sex: "Female",
         age: 40,
         patientId: "PT-2024-018",
@@ -713,8 +723,8 @@ export const patients: Patient[] = [
     },
     {
         id: "19",
-        firstName: "Andrew",
-        lastName: "Lee",
+        firstName: "Suleiman",
+        lastName: "Adamu",
         sex: "Male",
         age: 36,
         patientId: "PT-2024-019",
@@ -744,8 +754,8 @@ export const patients: Patient[] = [
     },
     {
         id: "20",
-        firstName: "Stephanie",
-        lastName: "Walker",
+        firstName: "Oluwaseun",
+        lastName: "Ajayi",
         sex: "Female",
         age: 28,
         patientId: "PT-2024-020",
@@ -775,8 +785,8 @@ export const patients: Patient[] = [
     },
     {
         id: "21",
-        firstName: "Brian",
-        lastName: "Hall",
+        firstName: "Maryam",
+        lastName: "Ibrahim",
         sex: "Male",
         age: 59,
         patientId: "PT-2024-021",
@@ -806,8 +816,8 @@ export const patients: Patient[] = [
     },
     {
         id: "22",
-        firstName: "Nicole",
-        lastName: "Allen",
+        firstName: "Chukwuemeka",
+        lastName: "Onah",
         sex: "Female",
         age: 34,
         patientId: "PT-2024-022",
@@ -837,8 +847,8 @@ export const patients: Patient[] = [
     },
     {
         id: "23",
-        firstName: "Kevin",
-        lastName: "Young",
+        firstName: "Halima",
+        lastName: "Garba",
         sex: "Male",
         age: 48,
         patientId: "PT-2024-023",
@@ -868,8 +878,8 @@ export const patients: Patient[] = [
     },
     {
         id: "24",
-        firstName: "Rachel",
-        lastName: "King",
+        firstName: "Olayinka",
+        lastName: "Olatunji",
         sex: "Female",
         age: 30,
         patientId: "PT-2024-024",
@@ -899,8 +909,8 @@ export const patients: Patient[] = [
     },
     {
         id: "25",
-        firstName: "Steven",
-        lastName: "Wright",
+        firstName: "Aminu",
+        lastName: "Lawal",
         sex: "Male",
         age: 42,
         patientId: "PT-2024-025",
@@ -1105,6 +1115,235 @@ export const encounters: Encounter[] = [
         diagnoses: [diagnoses[3]], // Low back pain (orthopedic)
         status: "completed"
     }
+];
+
+// Medical history data
+export const medicalHistoryEntries: MedicalHistoryEntry[] = [
+    {
+        id: "MH-001",
+        patientId: "1",
+        date: "2022-05-14",
+        condition: "Hypertension",
+        status: "chronic",
+        notes: "BP controlled with medication and diet adjustments.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
+    {
+        id: "MH-002",
+        patientId: "2",
+        date: "2023-02-09",
+        condition: "Migraine",
+        status: "active",
+        notes: "Recurring headaches; monitoring triggers and response to therapy.",
+        recordedBy: "Dr. Michael Chen",
+    },
+    {
+        id: "MH-003",
+        patientId: "3",
+        date: "2021-10-18",
+        condition: "Type 2 diabetes mellitus",
+        status: "chronic",
+        notes: "On oral hypoglycemics with periodic HbA1c review.",
+        recordedBy: "Dr. Emily Rodriguez",
+    },
+    {
+        id: "MH-004",
+        patientId: "4",
+        date: "2023-07-12",
+        condition: "Low back pain",
+        status: "active",
+        notes: "Physical therapy recommended; follow-up scheduled.",
+        recordedBy: "Dr. David Kim",
+    },
+    {
+        id: "MH-005",
+        patientId: "5",
+        date: "2022-11-05",
+        condition: "Asthma",
+        status: "chronic",
+        notes: "Uses rescue inhaler as needed; annual review.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
+    {
+        id: "MH-006",
+        patientId: "6",
+        date: "2023-03-27",
+        condition: "Gastro-esophageal reflux disease",
+        status: "active",
+        notes: "Dietary changes advised; started proton pump inhibitor.",
+        recordedBy: "Dr. Michael Chen",
+    },
+    {
+        id: "MH-007",
+        patientId: "7",
+        date: "2021-08-20",
+        condition: "Hypertension",
+        status: "chronic",
+        notes: "Stable on current regimen.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
+    {
+        id: "MH-008",
+        patientId: "8",
+        date: "2023-01-16",
+        condition: "Urinary tract infection",
+        status: "resolved",
+        notes: "Completed antibiotics; symptoms resolved.",
+        recordedBy: "Dr. Emily Rodriguez",
+    },
+    {
+        id: "MH-009",
+        patientId: "9",
+        date: "2022-09-04",
+        condition: "Osteoarthritis",
+        status: "chronic",
+        notes: "Knee pain managed with physiotherapy and NSAIDs.",
+        recordedBy: "Dr. David Kim",
+    },
+    {
+        id: "MH-010",
+        patientId: "10",
+        date: "2023-04-30",
+        condition: "Anemia",
+        status: "active",
+        notes: "Investigations ongoing; iron supplementation started.",
+        recordedBy: "Dr. Michael Chen",
+    },
+    {
+        id: "MH-011",
+        patientId: "11",
+        date: "2022-12-11",
+        condition: "Hyperlipidemia",
+        status: "active",
+        notes: "Lifestyle modification and statin therapy initiated.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
+    {
+        id: "MH-012",
+        patientId: "12",
+        date: "2021-06-23",
+        condition: "Allergic rhinitis",
+        status: "resolved",
+        notes: "Seasonal symptoms; resolved with antihistamines.",
+        recordedBy: "Dr. Emily Rodriguez",
+    },
+    {
+        id: "MH-013",
+        patientId: "13",
+        date: "2020-10-15",
+        condition: "Chronic kidney disease stage 2",
+        status: "chronic",
+        notes: "Regular monitoring of renal function.",
+        recordedBy: "Dr. David Kim",
+    },
+    {
+        id: "MH-014",
+        patientId: "14",
+        date: "2022-03-03",
+        condition: "Iron deficiency",
+        status: "resolved",
+        notes: "Completed supplementation course.",
+        recordedBy: "Dr. Michael Chen",
+    },
+    {
+        id: "MH-015",
+        patientId: "15",
+        date: "2023-06-19",
+        condition: "Peptic ulcer disease",
+        status: "active",
+        notes: "On treatment; follow-up endoscopy planned.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
+    {
+        id: "MH-016",
+        patientId: "16",
+        date: "2021-02-26",
+        condition: "Anxiety disorder",
+        status: "active",
+        notes: "Referred for counseling; monitoring response.",
+        recordedBy: "Dr. Emily Rodriguez",
+    },
+    {
+        id: "MH-017",
+        patientId: "17",
+        date: "2022-08-28",
+        condition: "Hypertension",
+        status: "active",
+        notes: "Medication adjusted due to elevated readings.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
+    {
+        id: "MH-018",
+        patientId: "18",
+        date: "2023-05-09",
+        condition: "Dermatitis",
+        status: "resolved",
+        notes: "Topical therapy effective.",
+        recordedBy: "Dr. Michael Chen",
+    },
+    {
+        id: "MH-019",
+        patientId: "19",
+        date: "2020-11-30",
+        condition: "Type 2 diabetes mellitus",
+        status: "chronic",
+        notes: "Dietary counseling and medication review ongoing.",
+        recordedBy: "Dr. Emily Rodriguez",
+    },
+    {
+        id: "MH-020",
+        patientId: "20",
+        date: "2022-01-17",
+        condition: "Asthma",
+        status: "active",
+        notes: "Inhaler technique reviewed; follow-up planned.",
+        recordedBy: "Dr. David Kim",
+    },
+    {
+        id: "MH-021",
+        patientId: "21",
+        date: "2021-09-06",
+        condition: "Thyroid disorder",
+        status: "active",
+        notes: "Monitoring thyroid function tests.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
+    {
+        id: "MH-022",
+        patientId: "22",
+        date: "2023-08-02",
+        condition: "Gastritis",
+        status: "resolved",
+        notes: "Symptoms improved with medication.",
+        recordedBy: "Dr. Michael Chen",
+    },
+    {
+        id: "MH-023",
+        patientId: "23",
+        date: "2022-04-25",
+        condition: "Low back pain",
+        status: "active",
+        notes: "Exercises prescribed; re-evaluation planned.",
+        recordedBy: "Dr. David Kim",
+    },
+    {
+        id: "MH-024",
+        patientId: "24",
+        date: "2023-10-11",
+        condition: "Migraine",
+        status: "active",
+        notes: "Started preventive therapy.",
+        recordedBy: "Dr. Emily Rodriguez",
+    },
+    {
+        id: "MH-025",
+        patientId: "25",
+        date: "2021-12-22",
+        condition: "Hypertension",
+        status: "chronic",
+        notes: "Stable; ongoing monitoring.",
+        recordedBy: "Dr. Sarah Johnson",
+    },
 ];
 
 // Vitals data
@@ -1356,6 +1595,10 @@ export const getEncountersByPatient = (patientId: string): Encounter[] => {
     return encounters.filter(encounter => encounter.patientId === patientId);
 };
 
+export const getMedicalHistoryByPatient = (patientId: string): MedicalHistoryEntry[] => {
+    return medicalHistoryEntries.filter(entry => entry.patientId === patientId);
+};
+
 // ================================
 // ZOD SCHEMAS (from mockEncounterData.tsx)
 // ================================
@@ -1414,3 +1657,4 @@ export const getLabTestById = (id: string): LabTest | undefined => {
 };
 
 export type EncounterFormSchema = z.infer<typeof encounterFormSchema>;
+

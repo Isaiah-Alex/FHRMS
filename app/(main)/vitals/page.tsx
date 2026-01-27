@@ -283,7 +283,7 @@ export default function VitalsPage() {
           <CardContent className="space-y-4">
             <form onSubmit={handleSubmit(handleSaveVitals)} className="space-y-4">
               {/* Blood Pressure */}
-              <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-2">
                   <Label className="text-sm font-medium">Systolic (mmHg) *</Label>
                   <Input
@@ -358,7 +358,7 @@ export default function VitalsPage() {
               </div>
 
               {/* Weight & Height */}
-              <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-2">
                   <Label className="text-sm font-medium">Weight (kg) *</Label>
                   <Input
