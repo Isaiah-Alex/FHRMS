@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -60,7 +60,7 @@ const vitalsFormSchema = z.object({
     .refine((val) => {
       const num = parseFloat(val);
       return !isNaN(num) && num >= 30 && num <= 45;
-    }, "Temperature must be between 30-45°C"),
+    }, "Temperature must be between 30-45 deg C"),
   pulse: z.string()
     .min(1, "Pulse rate is required")
     .refine((val) => {
@@ -235,12 +235,12 @@ export default function VitalsPage() {
   const dynamicSummary = calculateSummaryStats();
 
   return (
-    <div className="px-5 my-10 space-y-6">
+    <div className="px-4 my-6 space-y-6 sm:px-5 sm:my-10">
       {/* Patient Name Display Section */}
       <Card className="shadow-md border-primary/15">
-        <CardContent className="py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <CardContent className="py-4 sm:py-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center gap-3 sm:gap-4">
               <NameProfile
                 profileDisplay={mockPatientVitals.name
                   .split(" ")
@@ -248,22 +248,22 @@ export default function VitalsPage() {
                   .join("")}
                 color={mockPatientVitals.profileColor}
                 rounded={true}
-                className="w-16 h-16"
+                className="w-12 h-12 sm:w-16 sm:h-16"
               />
               <div>
-                <h1 className="text-3xl font-semibold">{mockPatientVitals.name}</h1>
-                <div className="flex items-center gap-4 mt-1 text-neutral-500">
+                <h1 className="text-2xl font-semibold sm:text-3xl">{mockPatientVitals.name}</h1>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm sm:text-base text-neutral-500">
                   <span>ID: <strong className="text-neutral-900">{mockPatientVitals.patientId}</strong></span>
                   <span>Age: <strong className="text-neutral-900">{mockPatientVitals.age}</strong></span>
                   <span>Gender: <strong className="text-neutral-900">{mockPatientVitals.gender}</strong></span>
                 </div>
               </div>
             </div>
-            <div className="flex gap-3">
-              <Button variant="outline" className="border-neutral-200 bg-white cursor-pointer text-neutral-500 hover:bg-primary hover:text-white">
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+              <Button variant="outline" className="border-neutral-200 bg-white cursor-pointer text-neutral-500 hover:bg-primary hover:text-white w-full sm:w-auto">
                 Edit Profile
               </Button>
-              <Button className="bg-primary hover:bg-primary-hover text-white cursor-pointer">
+              <Button className="bg-primary hover:bg-primary-hover text-white cursor-pointer w-full sm:w-auto">
                 Print Report
               </Button>
             </div>
@@ -283,7 +283,7 @@ export default function VitalsPage() {
           <CardContent className="space-y-4">
             <form onSubmit={handleSubmit(handleSaveVitals)} className="space-y-4">
             {/* Blood Pressure */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Systolic (mmHg) *</Label>
                 <Input
@@ -318,7 +318,7 @@ export default function VitalsPage() {
 
             {/* Body Temperature */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium">Body Temp (°C) *</Label>
+              <Label className="text-sm font-medium">Body Temp (deg C) *</Label>
               <div className="relative">
                 <Input
                   type="number"
@@ -358,7 +358,7 @@ export default function VitalsPage() {
             </div>
 
             {/* Weight & Height */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Weight (kg) *</Label>
                 <Input
@@ -420,12 +420,12 @@ export default function VitalsPage() {
         {/* Vitals History Section */}
         <Card className="shadow-md border-primary/15 lg:col-span-2">
           <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2 text-xl">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                 <RotateCcw className="w-5 h-5 text-primary" />
                 Vitals History
               </CardTitle>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 {/* Sort Order Button */}
                 <div className="relative">
                   <Button
@@ -568,8 +568,8 @@ export default function VitalsPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="border rounded-lg overflow-hidden">
-              <Table>
+            <div className="border rounded-lg overflow-x-auto">
+              <Table className="min-w-[760px]">
                 <TableHeader>
                   <TableRow className="bg-primary-light">
                     <TableHead className="font-semibold">DATE & TIME</TableHead>
@@ -601,7 +601,7 @@ export default function VitalsPage() {
                         </div>
                       </TableCell>
                       <TableCell className={record.temperature > 37.5 ? "text-warning" : ""}>
-                        {record.temperature}°C
+                        {record.temperature} deg C
                       </TableCell>
                       <TableCell>{record.pulse} bpm</TableCell>
                       <TableCell>{record.weight} kg</TableCell>
@@ -618,7 +618,7 @@ export default function VitalsPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex flex-col gap-3 mt-4 sm:flex-row sm:items-center sm:justify-between">
               <span className="text-sm text-neutral-500">
                 Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
                 {Math.min(currentPage * itemsPerPage, mockVitalsHistory.length)} of{" "}
@@ -650,7 +650,7 @@ export default function VitalsPage() {
       </div>
 
       {/* Summary Cards Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card className="shadow-md border-primary/15">
           <CardContent className="py-6">
             <h3 className="text-sm font-medium text-neutral-500 uppercase mb-2">
@@ -728,8 +728,9 @@ export default function VitalsPage() {
             <button
               onClick={() => setToast(null)}
               className="ml-2 text-white"
+              aria-label="Close notification"
             >
-              ✕
+              x
             </button>
           </div>
         </div>
@@ -737,3 +738,7 @@ export default function VitalsPage() {
     </div>
   );
 }
+
+
+
+

@@ -8,16 +8,18 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="grid grid-rows-[auto_1fr] grid-cols-[256px_1fr] h-screen">
-      <header className="col-span-2">
+    <div className="min-h-screen flex flex-col">
+      <header className="sticky top-0 z-20">
         <Header />
       </header>
-      <aside className="overflow-auto">
-        <Sidebar />
-      </aside>
-      <main className="overflow-auto p-6">
-        {children}
-      </main>
+      <div className="flex flex-1 flex-col lg:flex-row">
+        <aside className="w-full lg:w-64 lg:shrink-0 lg:overflow-y-auto">
+          <Sidebar />
+        </aside>
+        <main className="flex-1 p-4 sm:p-6">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

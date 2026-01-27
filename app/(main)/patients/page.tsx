@@ -110,7 +110,7 @@ export default function PatientsPage() {
   };
 
   return (
-    <div className="px-5 my-10 space-y-10">
+    <div className="px-4 my-6 space-y-8 sm:px-5 sm:my-10 sm:space-y-10">
       <Hero
         Title="Patients"
         Subtitle="Manage and view all registered patient records in the system"
@@ -119,11 +119,11 @@ export default function PatientsPage() {
 
       <div className="bg-white rounded-lg p-6 shadow-md space-y-6">
         {/* Top Actions */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-2xl font-semibold">Patients List</h2>
           <Button
             onClick={handleRegisterPatient}
-            className="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white w-full sm:w-auto"
           >
             <UserPlus className="w-5 h-5" />
             Register Patient
@@ -131,7 +131,7 @@ export default function PatientsPage() {
         </div>
 
         {/* Search and Filters */}
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-500" />
             <Input
@@ -168,7 +168,7 @@ export default function PatientsPage() {
             </SelectContent>
           </Select>
 
-          <Button variant="outline" className="flex items-center gap-2 bg-white hover:bg-primary text-neutral-500 hover:text-white">
+          <Button variant="outline" className="flex items-center gap-2 bg-white hover:bg-primary text-neutral-500 hover:text-white w-full lg:w-auto">
             <SlidersHorizontal className="w-5 h-5" />
             More Filters
           </Button>
@@ -180,8 +180,8 @@ export default function PatientsPage() {
         </div>
 
         {/* Table */}
-        <div className="border rounded-lg overflow-hidden">
-          <Table>
+        <div className="border rounded-lg overflow-x-auto">
+          <Table className="min-w-[720px]">
             <TableHeader>
               <TableRow className="bg-primary-light">
                 <TableHead>Profile</TableHead>
@@ -215,7 +215,7 @@ export default function PatientsPage() {
         {/* Pagination */}
         {totalPages > 1 && (
           <Pagination>
-            <PaginationContent>
+            <PaginationContent className="flex flex-wrap gap-2">
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

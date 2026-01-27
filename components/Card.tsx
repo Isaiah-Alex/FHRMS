@@ -34,10 +34,10 @@ const Card = ({ amount, description, percentage, icon, color, requiresAttention,
     };
 
     return (
-        <div className="flex justify-between items-center px-5 py-7 bg-white rounded-xl shadow-neutral-900/5 shadow-md border border-primary/15">
+        <div className="flex items-center justify-between gap-4 rounded-xl border border-primary/15 bg-white p-4 shadow-md shadow-neutral-900/5 sm:p-5">
             <div>
                 <div>
-                    <h2 className="text-4xl font-semibold">{amount}</h2>
+                    <h2 className="text-2xl font-semibold sm:text-3xl">{amount}</h2>
                     <p className="text-neutral-500 text-sm mt-1">{description}</p>
                 </div>
                 <div className="flex items-center gap-1 mt-3">
@@ -50,7 +50,7 @@ const Card = ({ amount, description, percentage, icon, color, requiresAttention,
                     </p>
                 </div>
             </div>
-            <div className={clsx("px-4 py-7.5 rounded-xl", getColorClasses(color))}>
+            <div className={clsx("rounded-xl p-3 sm:p-4", getColorClasses(color))}>
                 {icon}
             </div>
         </div>
