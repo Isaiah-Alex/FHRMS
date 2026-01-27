@@ -282,127 +282,127 @@ export default function VitalsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <form onSubmit={handleSubmit(handleSaveVitals)} className="space-y-4">
-            {/* Blood Pressure */}
-            <div className="grid grid-cols-2 gap-3">
+              {/* Blood Pressure */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Systolic (mmHg) *</Label>
+                  <Input
+                    type="number"
+                    placeholder="120"
+                    {...register("systolic")}
+                    className={errors.systolic ? "border-warning" : ""}
+                  />
+                  {errors.systolic && (
+                    <p className="text-sm text-warning flex items-center gap-1">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.systolic.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Diastolic (mmHg) *</Label>
+                  <Input
+                    type="number"
+                    placeholder="80"
+                    {...register("diastolic")}
+                    className={errors.diastolic ? "border-warning" : ""}
+                  />
+                  {errors.diastolic && (
+                    <p className="text-sm text-warning flex items-center gap-1">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.diastolic.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Body Temperature */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Systolic (mmHg) *</Label>
-                <Input
-                  type="number"
-                  placeholder="120"
-                  {...register("systolic")}
-                  className={errors.systolic ? "border-warning" : ""}
-                />
-                {errors.systolic && (
+                <Label className="text-sm font-medium">Body Temp (°C) *</Label>
+                <div className="relative">
+                  <Input
+                    type="number"
+                    step="0.1"
+                    placeholder="36.5"
+                    {...register("temperature")}
+                    className={errors.temperature ? "border-warning" : ""}
+                  />
+                  <Thermometer className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                </div>
+                {errors.temperature && (
                   <p className="text-sm text-warning flex items-center gap-1">
                     <AlertCircle className="w-4 h-4" />
-                    {errors.systolic.message}
+                    {errors.temperature.message}
                   </p>
                 )}
               </div>
+
+              {/* Pulse Rate */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Diastolic (mmHg) *</Label>
-                <Input
-                  type="number"
-                  placeholder="80"
-                  {...register("diastolic")}
-                  className={errors.diastolic ? "border-warning" : ""}
-                />
-                {errors.diastolic && (
+                <Label className="text-sm font-medium">Pulse Rate (BPM) *</Label>
+                <div className="relative">
+                  <Input
+                    type="number"
+                    placeholder="72"
+                    {...register("pulse")}
+                    className={errors.pulse ? "border-warning" : ""}
+                  />
+                  <Heart className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-warning" />
+                </div>
+                {errors.pulse && (
                   <p className="text-sm text-warning flex items-center gap-1">
                     <AlertCircle className="w-4 h-4" />
-                    {errors.diastolic.message}
+                    {errors.pulse.message}
                   </p>
                 )}
               </div>
-            </div>
 
-            {/* Body Temperature */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Body Temp (°C) *</Label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  step="0.1"
-                  placeholder="36.5"
-                  {...register("temperature")}
-                  className={errors.temperature ? "border-warning" : ""}
-                />
-                <Thermometer className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-500" />
+              {/* Weight & Height */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Weight (kg) *</Label>
+                  <Input
+                    type="number"
+                    step="0.1"
+                    placeholder="75.5"
+                    {...register("weight")}
+                    className={errors.weight ? "border-warning" : ""}
+                  />
+                  {errors.weight && (
+                    <p className="text-sm text-warning flex items-center gap-1">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.weight.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Height (cm) *</Label>
+                  <Input
+                    type="number"
+                    placeholder="178"
+                    {...register("height")}
+                    className={errors.height ? "border-warning" : ""}
+                  />
+                  {errors.height && (
+                    <p className="text-sm text-warning flex items-center gap-1">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.height.message}
+                    </p>
+                  )}
+                </div>
               </div>
-              {errors.temperature && (
-                <p className="text-sm text-warning flex items-center gap-1">
-                  <AlertCircle className="w-4 h-4" />
-                  {errors.temperature.message}
-                </p>
-              )}
-            </div>
 
-            {/* Pulse Rate */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Pulse Rate (BPM) *</Label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  placeholder="72"
-                  {...register("pulse")}
-                  className={errors.pulse ? "border-warning" : ""}
-                />
-                <Heart className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-warning" />
+              {/* BMI Display */}
+              <div className="bg-primary-light rounded-lg p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-neutral-500">Estimated BMI</span>
+                  <span className="text-2xl font-semibold">{bmi}</span>
+                </div>
+                <div className={`w-full h-2 rounded-full ${bmiStatus.barColor}`}></div>
+                <span className={`text-xs font-medium ${bmiStatus.color}`}>
+                  {bmiStatus.text}
+                </span>
               </div>
-              {errors.pulse && (
-                <p className="text-sm text-warning flex items-center gap-1">
-                  <AlertCircle className="w-4 h-4" />
-                  {errors.pulse.message}
-                </p>
-              )}
-            </div>
-
-            {/* Weight & Height */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Weight (kg) *</Label>
-                <Input
-                  type="number"
-                  step="0.1"
-                  placeholder="75.5"
-                  {...register("weight")}
-                  className={errors.weight ? "border-warning" : ""}
-                />
-                {errors.weight && (
-                  <p className="text-sm text-warning flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.weight.message}
-                  </p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Height (cm) *</Label>
-                <Input
-                  type="number"
-                  placeholder="178"
-                  {...register("height")}
-                  className={errors.height ? "border-warning" : ""}
-                />
-                {errors.height && (
-                  <p className="text-sm text-warning flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.height.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* BMI Display */}
-            <div className="bg-primary-light rounded-lg p-4 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-neutral-500">Estimated BMI</span>
-                <span className="text-2xl font-semibold">{bmi}</span>
-              </div>
-              <div className={`w-full h-2 rounded-full ${bmiStatus.barColor}`}></div>
-              <span className={`text-xs font-medium ${bmiStatus.color}`}>
-                {bmiStatus.text}
-              </span>
-            </div>
 
               {/* Save Button */}
               <Button
@@ -477,8 +477,7 @@ export default function VitalsPage() {
                     onClick={() => setShowGeneralFilter(!showGeneralFilter)}
                   >
                     <Calendar className="w-4 h-4" />
-                    Filter by date
-                  </Button>
+                    Filter by                  </Button>
 
                   {showGeneralFilter && (
                     <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-neutral-200 rounded-md shadow-lg z-10">
@@ -719,8 +718,8 @@ export default function VitalsPage() {
       {toast && (
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-in slide-in-from-top-2 duration-300">
           <div className={`flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border ${toast.type === 'success'
-              ? 'bg-primary/90  text-primary-light'
-              : 'bg-warning/90  text-warning-light'
+            ? 'bg-primary/90  text-primary-light'
+            : 'bg-warning/90  text-warning-light'
             }`}>
             <CheckCircle className={`w-5 h-5 ${toast.type === 'success' ? 'text-primary' : 'text-red-600'
               }`} />

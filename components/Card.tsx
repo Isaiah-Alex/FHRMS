@@ -34,7 +34,7 @@ const Card = ({ amount, description, percentage, icon, color, requiresAttention,
     };
 
     return (
-        <div className="flex justify-between items-center px-5 py-7 bg-white rounded-xl shadow-neutral-900/5 shadow-md border border-primary/15">
+        <div className="flex justify-between items-center px-5 py-7 bg-white rounded-xl shadow-neutral-900/5 shadow-md border border-primary/15 will-change-transform transform transition-transform duration-300 hover:scale-105">
             <div>
                 <div>
                     <h2 className="text-4xl font-semibold">{amount}</h2>

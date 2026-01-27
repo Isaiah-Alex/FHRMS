@@ -36,17 +36,40 @@ export type Patient = {
     age: number;
     patientId: string;
     profileColor: "blue" | "green" | "purple" | "yellow";
-    // Extended fields for comprehensive patient data
-    dateOfBirth?: string;
-    phoneNumber?: string;
-    email?: string;
-    address?: string;
-    emergencyContact?: {
+
+    // Extended demographic fields (ADD THESE)
+    dateOfBirth: string;
+    status: "active" | "inactive";
+    maritalStatus: "Single" | "Married" | "Divorced" | "Widowed" | "Not Specified";
+    preferredLanguage: string;
+    nationality: string;
+    ethnicity: string;
+
+    // Contact information (KEEP phoneNumber, email, address but ADD these)
+    phoneNumber: string;  // This was optional, now required
+    primaryPhone: string; // NEW - same as phoneNumber for now
+    secondaryPhone?: string; // NEW
+    email: string;
+    address: string;
+    residentialAddress: string; // NEW - same as address
+
+    // Emergency contact (ALREADY EXISTS - just ensure it's required)
+    emergencyContact: {
         name: string;
         relationship: string;
         phone: string;
     };
+
+    // Administrative info (ADD THESE)
+    primaryCareProvider: string;
+    insuranceProvider: string;
+    policyNumber: string;
+
+    // Audit info (ADD THESE)
+    lastUpdatedBy: string;
+    lastUpdatedDate: string;
 };
+
 
 export type Doctor = {
     id: string;
@@ -124,6 +147,8 @@ export type VitalsSummary = {
 // ================================
 
 // Patients data
+// COMPLETE PATIENTS ARRAY - Replace your entire patients array with this
+
 export const patients: Patient[] = [
     {
         id: "1",
@@ -141,7 +166,20 @@ export const patients: Patient[] = [
             name: "Jane Doe",
             relationship: "Wife",
             phone: "+1-555-0124"
-        }
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1 (555) 123-4567",
+        secondaryPhone: undefined,
+        residentialAddress: "123 Healthway Blvd, Suite 402, Metro City, NY 10001, USA",
+        primaryCareProvider: "Dr. Sarah Jenkins",
+        insuranceProvider: "BlueShield Health Plan",
+        policyNumber: "BSP-449-1120-X",
+        lastUpdatedBy: "Admin (ID: 4421)",
+        lastUpdatedDate: "Oct 12, 2023 - 09:42 AM"
     },
     {
         id: "2",
@@ -153,7 +191,26 @@ export const patients: Patient[] = [
         profileColor: "green",
         dateOfBirth: "1992-07-22",
         phoneNumber: "+1-555-0125",
-        email: "jane.smith@email.com"
+        email: "jane.smith@email.com",
+        address: "456 Oak Ave, City, State 12345",
+        emergencyContact: {
+            name: "John Smith",
+            relationship: "Brother",
+            phone: "+1-555-0126"
+        },
+        status: "active",
+        maritalStatus: "Single",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0125",
+        secondaryPhone: undefined,
+        residentialAddress: "456 Oak Ave, City, State 12345",
+        primaryCareProvider: "Dr. Michael Chen",
+        insuranceProvider: "HealthFirst Insurance",
+        policyNumber: "HF-223-8891-Y",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 5, 2024 - 02:15 PM"
     },
     {
         id: "3",
@@ -165,7 +222,26 @@ export const patients: Patient[] = [
         profileColor: "purple",
         dateOfBirth: "1966-11-08",
         phoneNumber: "+1-555-0126",
-        email: "michael.johnson@email.com"
+        email: "michael.johnson@email.com",
+        address: "789 Pine St, City, State 12345",
+        emergencyContact: {
+            name: "Sarah Johnson",
+            relationship: "Wife",
+            phone: "+1-555-0127"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0126",
+        secondaryPhone: undefined,
+        residentialAddress: "789 Pine St, City, State 12345",
+        primaryCareProvider: "Dr. Sarah Johnson",
+        insuranceProvider: "Medicare Plus",
+        policyNumber: "MP-567-4432-Z",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 3, 2024 - 10:30 AM"
     },
     {
         id: "4",
@@ -177,7 +253,26 @@ export const patients: Patient[] = [
         profileColor: "yellow",
         dateOfBirth: "1997-01-30",
         phoneNumber: "+1-555-0127",
-        email: "emily.williams@email.com"
+        email: "emily.williams@email.com",
+        address: "321 Elm St, City, State 12345",
+        emergencyContact: {
+            name: "Mary Williams",
+            relationship: "Mother",
+            phone: "+1-555-0128"
+        },
+        status: "active",
+        maritalStatus: "Single",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0127",
+        secondaryPhone: undefined,
+        residentialAddress: "321 Elm St, City, State 12345",
+        primaryCareProvider: "Dr. Emily Rodriguez",
+        insuranceProvider: "Young Adults Health",
+        policyNumber: "YAH-890-2231-A",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 8, 2024 - 03:45 PM"
     },
     {
         id: "5",
@@ -189,8 +284,28 @@ export const patients: Patient[] = [
         profileColor: "blue",
         dateOfBirth: "1983-09-12",
         phoneNumber: "+1-555-0128",
-        email: "david.brown@email.com"
+        email: "david.brown@email.com",
+        address: "654 Maple Dr, City, State 12345",
+        emergencyContact: {
+            name: "Lisa Brown",
+            relationship: "Wife",
+            phone: "+1-555-0129"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0128",
+        secondaryPhone: undefined,
+        residentialAddress: "654 Maple Dr, City, State 12345",
+        primaryCareProvider: "Dr. David Kim",
+        insuranceProvider: "Family Care Insurance",
+        policyNumber: "FCI-445-7723-B",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 2, 2024 - 09:20 AM"
     },
+    // Continue for patients 6-25 with similar pattern
     {
         id: "6",
         firstName: "Sarah",
@@ -201,8 +316,29 @@ export const patients: Patient[] = [
         profileColor: "green",
         dateOfBirth: "1989-05-18",
         phoneNumber: "+1-555-0129",
-        email: "sarah.davis@email.com"
+        email: "sarah.davis@email.com",
+        address: "987 Cedar Ln, City, State 12345",
+        emergencyContact: {
+            name: "Tom Davis",
+            relationship: "Husband",
+            phone: "+1-555-0130"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0129",
+        secondaryPhone: undefined,
+        residentialAddress: "987 Cedar Ln, City, State 12345",
+        primaryCareProvider: "Dr. Sarah Johnson",
+        insuranceProvider: "United Health",
+        policyNumber: "UH-778-9954-C",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 6, 2024 - 11:15 AM"
     },
+    // ADD THESE PATIENTS TO YOUR patients ARRAY (after patient #6)
+
     {
         id: "7",
         firstName: "James",
@@ -213,7 +349,26 @@ export const patients: Patient[] = [
         profileColor: "purple",
         dateOfBirth: "1961-12-03",
         phoneNumber: "+1-555-0130",
-        email: "james.miller@email.com"
+        email: "james.miller@email.com",
+        address: "234 Birch Rd, City, State 12345",
+        emergencyContact: {
+            name: "Linda Miller",
+            relationship: "Wife",
+            phone: "+1-555-0131"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0130",
+        secondaryPhone: undefined,
+        residentialAddress: "234 Birch Rd, City, State 12345",
+        primaryCareProvider: "Dr. Sarah Johnson",
+        insuranceProvider: "Senior Care Plus",
+        policyNumber: "SCP-112-5564-D",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 7, 2024 - 04:20 PM"
     },
     {
         id: "8",
@@ -225,7 +380,26 @@ export const patients: Patient[] = [
         profileColor: "yellow",
         dateOfBirth: "1995-08-25",
         phoneNumber: "+1-555-0131",
-        email: "maria.garcia@email.com"
+        email: "maria.garcia@email.com",
+        address: "567 Willow St, City, State 12345",
+        emergencyContact: {
+            name: "Carlos Garcia",
+            relationship: "Father",
+            phone: "+1-555-0132"
+        },
+        status: "active",
+        maritalStatus: "Single",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Hispanic",
+        primaryPhone: "+1-555-0131",
+        secondaryPhone: undefined,
+        residentialAddress: "567 Willow St, City, State 12345",
+        primaryCareProvider: "Dr. Emily Rodriguez",
+        insuranceProvider: "Community Health",
+        policyNumber: "CH-334-7712-E",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 9, 2024 - 09:10 AM"
     },
     {
         id: "9",
@@ -237,7 +411,26 @@ export const patients: Patient[] = [
         profileColor: "blue",
         dateOfBirth: "1974-04-17",
         phoneNumber: "+1-555-0132",
-        email: "robert.martinez@email.com"
+        email: "robert.martinez@email.com",
+        address: "890 Spruce Ave, City, State 12345",
+        emergencyContact: {
+            name: "Anna Martinez",
+            relationship: "Wife",
+            phone: "+1-555-0133"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Hispanic",
+        primaryPhone: "+1-555-0132",
+        secondaryPhone: undefined,
+        residentialAddress: "890 Spruce Ave, City, State 12345",
+        primaryCareProvider: "Dr. David Kim",
+        insuranceProvider: "Premier Health",
+        policyNumber: "PH-556-9983-F",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 4, 2024 - 01:35 PM"
     },
     {
         id: "10",
@@ -249,7 +442,26 @@ export const patients: Patient[] = [
         profileColor: "green",
         dateOfBirth: "1986-06-09",
         phoneNumber: "+1-555-0133",
-        email: "lisa.anderson@email.com"
+        email: "lisa.anderson@email.com",
+        address: "111 Aspen Ct, City, State 12345",
+        emergencyContact: {
+            name: "Mark Anderson",
+            relationship: "Husband",
+            phone: "+1-555-0134"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0133",
+        secondaryPhone: undefined,
+        residentialAddress: "111 Aspen Ct, City, State 12345",
+        primaryCareProvider: "Dr. Michael Chen",
+        insuranceProvider: "Family Health Network",
+        policyNumber: "FHN-667-1124-G",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 10, 2024 - 10:50 AM"
     },
     {
         id: "11",
@@ -261,7 +473,26 @@ export const patients: Patient[] = [
         profileColor: "purple",
         dateOfBirth: "1980-02-28",
         phoneNumber: "+1-555-0134",
-        email: "christopher.taylor@email.com"
+        email: "christopher.taylor@email.com",
+        address: "222 Poplar Dr, City, State 12345",
+        emergencyContact: {
+            name: "Jennifer Taylor",
+            relationship: "Wife",
+            phone: "+1-555-0135"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0134",
+        secondaryPhone: undefined,
+        residentialAddress: "222 Poplar Dr, City, State 12345",
+        primaryCareProvider: "Dr. Sarah Johnson",
+        insuranceProvider: "Nationwide Health",
+        policyNumber: "NWH-778-3345-H",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 11, 2024 - 02:15 PM"
     },
     {
         id: "12",
@@ -273,7 +504,26 @@ export const patients: Patient[] = [
         profileColor: "yellow",
         dateOfBirth: "1993-10-14",
         phoneNumber: "+1-555-0135",
-        email: "amanda.thomas@email.com"
+        email: "amanda.thomas@email.com",
+        address: "333 Hickory Ln, City, State 12345",
+        emergencyContact: {
+            name: "Robert Thomas",
+            relationship: "Father",
+            phone: "+1-555-0136"
+        },
+        status: "active",
+        maritalStatus: "Single",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0135",
+        secondaryPhone: undefined,
+        residentialAddress: "333 Hickory Ln, City, State 12345",
+        primaryCareProvider: "Dr. Emily Rodriguez",
+        insuranceProvider: "Young Professional Health",
+        policyNumber: "YPH-889-5576-I",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 12, 2024 - 11:25 AM"
     },
     {
         id: "13",
@@ -285,7 +535,26 @@ export const patients: Patient[] = [
         profileColor: "blue",
         dateOfBirth: "1969-07-06",
         phoneNumber: "+1-555-0136",
-        email: "daniel.moore@email.com"
+        email: "daniel.moore@email.com",
+        address: "444 Redwood Blvd, City, State 12345",
+        emergencyContact: {
+            name: "Patricia Moore",
+            relationship: "Wife",
+            phone: "+1-555-0137"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0136",
+        secondaryPhone: undefined,
+        residentialAddress: "444 Redwood Blvd, City, State 12345",
+        primaryCareProvider: "Dr. David Kim",
+        insuranceProvider: "Executive Health Plan",
+        policyNumber: "EHP-990-6687-J",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 13, 2024 - 03:40 PM"
     },
     {
         id: "14",
@@ -297,7 +566,26 @@ export const patients: Patient[] = [
         profileColor: "green",
         dateOfBirth: "1998-03-21",
         phoneNumber: "+1-555-0137",
-        email: "jessica.jackson@email.com"
+        email: "jessica.jackson@email.com",
+        address: "555 Magnolia St, City, State 12345",
+        emergencyContact: {
+            name: "Susan Jackson",
+            relationship: "Mother",
+            phone: "+1-555-0138"
+        },
+        status: "active",
+        maritalStatus: "Single",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0137",
+        secondaryPhone: undefined,
+        residentialAddress: "555 Magnolia St, City, State 12345",
+        primaryCareProvider: "Dr. Michael Chen",
+        insuranceProvider: "Student Health Plus",
+        policyNumber: "SHP-101-7798-K",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 14, 2024 - 08:55 AM"
     },
     {
         id: "15",
@@ -309,7 +597,26 @@ export const patients: Patient[] = [
         profileColor: "purple",
         dateOfBirth: "1977-11-19",
         phoneNumber: "+1-555-0138",
-        email: "matthew.white@email.com"
+        email: "matthew.white@email.com",
+        address: "666 Sequoia Way, City, State 12345",
+        emergencyContact: {
+            name: "Michelle White",
+            relationship: "Wife",
+            phone: "+1-555-0139"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0138",
+        secondaryPhone: undefined,
+        residentialAddress: "666 Sequoia Way, City, State 12345",
+        primaryCareProvider: "Dr. Sarah Johnson",
+        insuranceProvider: "Premium Care Insurance",
+        policyNumber: "PCI-212-8809-L",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 15, 2024 - 01:30 PM"
     },
     {
         id: "16",
@@ -321,7 +628,26 @@ export const patients: Patient[] = [
         profileColor: "yellow",
         dateOfBirth: "1991-01-08",
         phoneNumber: "+1-555-0139",
-        email: "ashley.harris@email.com"
+        email: "ashley.harris@email.com",
+        address: "777 Dogwood Dr, City, State 12345",
+        emergencyContact: {
+            name: "Brian Harris",
+            relationship: "Husband",
+            phone: "+1-555-0140"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0139",
+        secondaryPhone: undefined,
+        residentialAddress: "777 Dogwood Dr, City, State 12345",
+        primaryCareProvider: "Dr. Emily Rodriguez",
+        insuranceProvider: "HealthChoice Network",
+        policyNumber: "HCN-323-9910-M",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 16, 2024 - 09:45 AM"
     },
     {
         id: "17",
@@ -333,7 +659,26 @@ export const patients: Patient[] = [
         profileColor: "blue",
         dateOfBirth: "1972-05-27",
         phoneNumber: "+1-555-0140",
-        email: "joshua.martin@email.com"
+        email: "joshua.martin@email.com",
+        address: "888 Sycamore Rd, City, State 12345",
+        emergencyContact: {
+            name: "Rebecca Martin",
+            relationship: "Wife",
+            phone: "+1-555-0141"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0140",
+        secondaryPhone: undefined,
+        residentialAddress: "888 Sycamore Rd, City, State 12345",
+        primaryCareProvider: "Dr. David Kim",
+        insuranceProvider: "Midlife Health Coverage",
+        policyNumber: "MHC-434-1021-N",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 17, 2024 - 02:20 PM"
     },
     {
         id: "18",
@@ -345,7 +690,26 @@ export const patients: Patient[] = [
         profileColor: "green",
         dateOfBirth: "1984-09-04",
         phoneNumber: "+1-555-0141",
-        email: "melissa.thompson@email.com"
+        email: "melissa.thompson@email.com",
+        address: "999 Walnut Ave, City, State 12345",
+        emergencyContact: {
+            name: "Kevin Thompson",
+            relationship: "Husband",
+            phone: "+1-555-0142"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0141",
+        secondaryPhone: undefined,
+        residentialAddress: "999 Walnut Ave, City, State 12345",
+        primaryCareProvider: "Dr. Michael Chen",
+        insuranceProvider: "Family First Insurance",
+        policyNumber: "FFI-545-2132-O",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 18, 2024 - 10:05 AM"
     },
     {
         id: "19",
@@ -357,7 +721,26 @@ export const patients: Patient[] = [
         profileColor: "purple",
         dateOfBirth: "1988-12-16",
         phoneNumber: "+1-555-0142",
-        email: "andrew.lee@email.com"
+        email: "andrew.lee@email.com",
+        address: "101 Chestnut Ln, City, State 12345",
+        emergencyContact: {
+            name: "Grace Lee",
+            relationship: "Wife",
+            phone: "+1-555-0143"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Asian",
+        primaryPhone: "+1-555-0142",
+        secondaryPhone: undefined,
+        residentialAddress: "101 Chestnut Ln, City, State 12345",
+        primaryCareProvider: "Dr. Sarah Johnson",
+        insuranceProvider: "Tech Workers Health",
+        policyNumber: "TWH-656-3243-P",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 19, 2024 - 03:50 PM"
     },
     {
         id: "20",
@@ -369,7 +752,26 @@ export const patients: Patient[] = [
         profileColor: "yellow",
         dateOfBirth: "1996-08-13",
         phoneNumber: "+1-555-0143",
-        email: "stephanie.walker@email.com"
+        email: "stephanie.walker@email.com",
+        address: "202 Beech St, City, State 12345",
+        emergencyContact: {
+            name: "Laura Walker",
+            relationship: "Mother",
+            phone: "+1-555-0144"
+        },
+        status: "active",
+        maritalStatus: "Single",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0143",
+        secondaryPhone: undefined,
+        residentialAddress: "202 Beech St, City, State 12345",
+        primaryCareProvider: "Dr. Emily Rodriguez",
+        insuranceProvider: "Millennial Health",
+        policyNumber: "MH-767-4354-Q",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 20, 2024 - 11:30 AM"
     },
     {
         id: "21",
@@ -381,7 +783,26 @@ export const patients: Patient[] = [
         profileColor: "blue",
         dateOfBirth: "1965-04-29",
         phoneNumber: "+1-555-0144",
-        email: "brian.hall@email.com"
+        email: "brian.hall@email.com",
+        address: "303 Cypress Ct, City, State 12345",
+        emergencyContact: {
+            name: "Donna Hall",
+            relationship: "Wife",
+            phone: "+1-555-0145"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0144",
+        secondaryPhone: undefined,
+        residentialAddress: "303 Cypress Ct, City, State 12345",
+        primaryCareProvider: "Dr. David Kim",
+        insuranceProvider: "Senior Health Plus",
+        policyNumber: "SHP-878-5465-R",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 21, 2024 - 08:15 AM"
     },
     {
         id: "22",
@@ -393,7 +814,26 @@ export const patients: Patient[] = [
         profileColor: "green",
         dateOfBirth: "1990-06-11",
         phoneNumber: "+1-555-0145",
-        email: "nicole.allen@email.com"
+        email: "nicole.allen@email.com",
+        address: "404 Fir Dr, City, State 12345",
+        emergencyContact: {
+            name: "James Allen",
+            relationship: "Husband",
+            phone: "+1-555-0146"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0145",
+        secondaryPhone: undefined,
+        residentialAddress: "404 Fir Dr, City, State 12345",
+        primaryCareProvider: "Dr. Michael Chen",
+        insuranceProvider: "Modern Family Health",
+        policyNumber: "MFH-989-6576-S",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 22, 2024 - 01:40 PM"
     },
     {
         id: "23",
@@ -405,7 +845,26 @@ export const patients: Patient[] = [
         profileColor: "purple",
         dateOfBirth: "1976-01-23",
         phoneNumber: "+1-555-0146",
-        email: "kevin.young@email.com"
+        email: "kevin.young@email.com",
+        address: "505 Alder Rd, City, State 12345",
+        emergencyContact: {
+            name: "Carol Young",
+            relationship: "Wife",
+            phone: "+1-555-0147"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0146",
+        secondaryPhone: undefined,
+        residentialAddress: "505 Alder Rd, City, State 12345",
+        primaryCareProvider: "Dr. Sarah Johnson",
+        insuranceProvider: "Professional Health Network",
+        policyNumber: "PHN-090-7687-T",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 23, 2024 - 09:25 AM"
     },
     {
         id: "24",
@@ -417,7 +876,26 @@ export const patients: Patient[] = [
         profileColor: "yellow",
         dateOfBirth: "1994-07-30",
         phoneNumber: "+1-555-0147",
-        email: "rachel.king@email.com"
+        email: "rachel.king@email.com",
+        address: "606 Hawthorn Way, City, State 12345",
+        emergencyContact: {
+            name: "David King",
+            relationship: "Brother",
+            phone: "+1-555-0148"
+        },
+        status: "active",
+        maritalStatus: "Single",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0147",
+        secondaryPhone: undefined,
+        residentialAddress: "606 Hawthorn Way, City, State 12345",
+        primaryCareProvider: "Dr. Emily Rodriguez",
+        insuranceProvider: "Young Adult Care",
+        policyNumber: "YAC-191-8798-U",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 24, 2024 - 02:55 PM"
     },
     {
         id: "25",
@@ -429,9 +907,41 @@ export const patients: Patient[] = [
         profileColor: "blue",
         dateOfBirth: "1982-03-07",
         phoneNumber: "+1-555-0148",
-        email: "steven.wright@email.com"
-    },
+        email: "steven.wright@email.com",
+        address: "707 Juniper Blvd, City, State 12345",
+        emergencyContact: {
+            name: "Angela Wright",
+            relationship: "Wife",
+            phone: "+1-555-0149"
+        },
+        status: "active",
+        maritalStatus: "Married",
+        preferredLanguage: "English",
+        nationality: "American",
+        ethnicity: "Not Specified",
+        primaryPhone: "+1-555-0148",
+        secondaryPhone: undefined,
+        residentialAddress: "707 Juniper Blvd, City, State 12345",
+        primaryCareProvider: "Dr. David Kim",
+        insuranceProvider: "Complete Health Solutions",
+        policyNumber: "CHS-292-9809-V",
+        lastUpdatedBy: "System",
+        lastUpdatedDate: "Jan 25, 2024 - 10:10 AM"
+    }
+
 ];
+
+// NOTE: For patients 7-25, follow the same pattern:
+// - Use existing data (id, firstName, lastName, etc.)
+// - Generate unique localId (L-XXXXX)
+// - Generate unique federatedId (FED-XXX-YYZ)
+// - Set status: "active"
+// - Set maritalStatus based on age (Single for <30, Married for 30+, or "Not Specified")
+// - Set primaryPhone = phoneNumber
+// - Set residentialAddress = address
+// - Assign one of the 4 doctors as primaryCareProvider
+// - Create realistic insurance data
+// - Set lastUpdatedBy: "System" and recent lastUpdatedDate
 
 // Doctors data
 export const doctors: Doctor[] = [
@@ -511,6 +1021,90 @@ export const encounters: Encounter[] = [
         diagnoses: [],
         status: "active"
     },
+    {
+        id: "ENC-003",
+        patientId: "3",
+        doctorId: "DOC-003",
+        encounterType: "OPD",
+        date: "2024-01-20",
+        time: "02:00 PM",
+        reasonForVisit: "Follow-up for diabetes management",
+        clinicalNotes: "HbA1c levels improved. Continue current medication. Dietary counseling provided.",
+        diagnoses: [diagnoses[2]], // Type 2 diabetes
+        status: "completed"
+    },
+    {
+        id: "ENC-004",
+        patientId: "4",
+        doctorId: "DOC-004",
+        encounterType: "OPD",
+        date: "2024-01-19",
+        time: "11:00 AM",
+        reasonForVisit: "Back pain consultation",
+        clinicalNotes: "Patient complains of lower back pain. Physical examination performed. X-ray ordered.",
+        diagnoses: [diagnoses[3]], // Low back pain
+        status: "active"
+    },
+    {
+        id: "ENC-005",
+        patientId: "5",
+        doctorId: "DOC-001",
+        encounterType: "OPD",
+        date: "2024-01-18",
+        time: "03:30 PM",
+        reasonForVisit: "Fever and respiratory symptoms",
+        clinicalNotes: "Fever present for 3 days. Throat examination normal. Advised rest and hydration.",
+        diagnoses: [diagnoses[0]], // Acute upper respiratory infection
+        status: "completed"
+    },
+    {
+        id: "ENC-006",
+        patientId: "6",
+        doctorId: "DOC-002",
+        encounterType: "IPD",
+        date: "2024-01-17",
+        time: "08:00 AM",
+        reasonForVisit: "Chest pain admission",
+        clinicalNotes: "Patient admitted for observation. ECG and cardiac enzymes monitoring initiated.",
+        diagnoses: [],
+        status: "completed"
+    },
+    {
+        id: "ENC-007",
+        patientId: "7",
+        doctorId: "DOC-001",
+        encounterType: "OPD",
+        date: "2024-01-16",
+        time: "10:30 AM",
+        reasonForVisit: "Hypertension review",
+        clinicalNotes: "BP controlled well on current antihypertensive. Continue same medication.",
+        diagnoses: [diagnoses[1]], // Hypertension
+        status: "completed"
+    },
+    {
+        id: "ENC-008",
+        patientId: "8",
+        doctorId: "DOC-003",
+        encounterType: "OPD",
+        date: "2024-01-15",
+        time: "01:15 PM",
+        reasonForVisit: "Urinary tract infection symptoms",
+        clinicalNotes: "Dysuria and frequency reported. Urinalysis shows infection. Antibiotics prescribed.",
+        diagnoses: [diagnoses[7]], // UTI
+        status: "completed"
+    },
+    {
+        id: "ENC-009",
+        patientId: "9",
+        doctorId: "DOC-004",
+        encounterType: "OPD",
+        date: "2024-01-14",
+        time: "04:45 PM",
+        reasonForVisit: "Joint pain and stiffness",
+        clinicalNotes: "Patient reports knee pain. Range of motion assessment done. Physical therapy recommended.",
+        diagnoses: [diagnoses[3]], // Low back pain (orthopedic)
+        status: "completed"
+    }
 ];
 
 // Vitals data

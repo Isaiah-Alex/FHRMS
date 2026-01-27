@@ -1,12 +1,43 @@
 "use client";
 
+import { useMemo } from "react";
 import Hero from "@/components/Hero";
 import Card from "@/components/Card";
 import { FlaskConical, CalendarFold, UserRound, Stethoscope, UserPlus, Pill, Activity } from "lucide-react";
 import QuickActions from "@/components/QuickActions";
 import History from "@/components/History";
+import { patients, encounters, labTests } from "@/lib/database";
 
 const Home = () => {
+  // Calculate dashboard statistics
+  const stats = useMemo(() => {
+    // Total patients
+    const totalPatients = patients.length;
+
+    // Today's visits (encounters from today)
+    const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const todaysVisits = encounters.filter(enc => enc.date === today).length;
+
+    // Pending lab results
+    const pendingLabResults = labTests.filter(test => test.status === "pending").length;
+
+    // Active encounters
+    const activeEncounters = encounters.filter(enc => enc.status === "active").length;
+
+    // Calculate percentage change for total patients (mock calculation)
+    // In a real scenario, you'd compare with last month's data
+    const lastMonthPatients = Math.floor(totalPatients * 0.9); // Simulating 10% growth
+    const patientGrowthPercentage = Math.round(((totalPatients - lastMonthPatients) / lastMonthPatients) * 100);
+
+    return {
+      totalPatients,
+      todaysVisits,
+      pendingLabResults,
+      activeEncounters,
+      patientGrowthPercentage
+    };
+  }, []);
+
   return (
     <div className="px-5 my-10 space-y-10">
       <Hero
@@ -16,33 +47,33 @@ const Home = () => {
       />
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card 
-          amount={1247} 
+          amount={stats.totalPatients} 
           description="Total Patients" 
-          percentage={12} 
+          percentage={stats.patientGrowthPercentage} 
           notice="from last month" 
           icon={<UserRound className="w-16 h-16" strokeWidth={2.5} />} 
           color="blue"
           requiresAttention="success"
         />
         <Card 
-          amount={1247} 
-          description="Today's Visit" 
+          amount={stats.todaysVisits} 
+          description="Today's Visits" 
           notice="updated minutes ago" 
           icon={<CalendarFold className="w-16 h-16" strokeWidth={2.5} />} 
           color="green"
         />
         <Card 
-          amount={1247} 
-          description="Pending Lab Result" 
-          notice="Requires attention" 
+          amount={stats.pendingLabResults} 
+          description="Pending Lab Results" 
+          notice={stats.pendingLabResults > 0 ? "Requires attention" : "All clear"} 
           icon={<FlaskConical className="w-16 h-16" strokeWidth={2.5} />} 
           color="yellow" 
-          requiresAttention="warning"
+          requiresAttention={stats.pendingLabResults > 0 ? "warning" : undefined}
         />
         <Card 
-          amount={1247} 
+          amount={stats.activeEncounters} 
           description="Active Encounters" 
-          notice="Current week" 
+          notice="Current active" 
           icon={<Stethoscope className="w-16 h-16" strokeWidth={2.5} />} 
           color="purple"
         />
@@ -53,15 +84,15 @@ const Home = () => {
           <QuickActions 
             text="Register New Patient" 
             icon={<UserPlus className="w-5 h-5" />} 
-            href="/patients"
+            href="/patients/register"
           />
           <QuickActions 
             text="Create Encounter" 
             icon={<Stethoscope className="w-5 h-5" />} 
-            href="/encounters"
+            href="/encounters/new"
           />
           <QuickActions 
-            text="View Activity" 
+            text="View Vitals" 
             icon={<Activity className="w-5 h-5" />} 
             href="/vitals"
           />

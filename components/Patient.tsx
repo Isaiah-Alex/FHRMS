@@ -1,59 +1,71 @@
 import clsx from "clsx";
 import NameProfile from "./NameProfile";
+import { getPatientById, getDoctorById, encounters } from "@/lib/database";
 
 type Props = {
-    name: string;
-    id: string;
-    date: string;
-    time: string;
-    gender: string;
-    age: number;
-    colorIndex?: number;
-    doctorName: string;
-    isEncounter: boolean;
-    isActive: boolean;
+    patientId: string;
+    encounterId?: string;
+    isEncounter?: boolean;
 };
 
-const Patient = ({ name, id, date, gender, age, time, doctorName, colorIndex = 0, isEncounter = false, isActive }: Props) => {
-    const colorSchemes: Array<"blue" | "green" | "purple" | "yellow"> = [
-        'blue',
-        'green',
-        'purple',
-        'yellow'
-    ];
+const Patient = ({ patientId, encounterId, isEncounter = false }: Props) => {
+    const patient = getPatientById(patientId);
+    
+    if (!patient) {
+        return null;
+    }
 
-    const getInitials = (fullName: string): string => {
-        const names = fullName.trim().split(' ');
-        if (names.length >= 2) {
-            return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
-        }
-        return fullName.substring(0, 2).toUpperCase();
+    const getInitials = (firstName: string, lastName: string): string => {
+        return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
     };
 
-    // Cycle through colors based on index
-    const color = colorSchemes[colorIndex % colorSchemes.length];
+    // Fetch encounter data if this is an encounter display
+    const encounter = isEncounter && encounterId 
+        ? encounters.find(enc => enc.id === encounterId)
+        : null;
+
+    const doctor = encounter ? getDoctorById(encounter.doctorId) : null;
 
     return (
         <div className="flex items-center gap-4 m-4">
-            <NameProfile profileDisplay={getInitials(name)} color={color} />
+            <NameProfile 
+                profileDisplay={getInitials(patient.firstName, patient.lastName)} 
+                color={patient.profileColor} 
+            />
             <div className="flex justify-between h-full w-full">
                 <div>
-                    <h4 className="font-medium">{name}</h4>
-                    <p className="text-sm text-neutral-500">ID: PAT-{id}</p>
-                    {isEncounter && <small className="text-neutral-500/80 self-end">Dr. {doctorName}</small>}
+                    <h4 className="font-medium">{patient.firstName} {patient.lastName}</h4>
+                    <p className="text-sm text-neutral-500">ID: {patient.patientId}</p>
+                    {isEncounter && doctor && (
+                        <small className="text-neutral-500/80 self-end">
+                            {doctor.name}
+                        </small>
+                    )}
                 </div>
                 <div className="flex flex-col">
-                    <p className="text-sm text-neutral-500">{date} {time}</p>
-                    {!isEncounter && <small className="text-neutral-500/80 self-end">{gender}, {age} years</small>}
-                    {isEncounter && (
-                        <small className={clsx(
-                            "self-end px-2 py-1 rounded-full font-medium",
-                            isActive
-                                ? "text-success bg-success-light"
-                                : "text-neutral-500 bg-neutral-200"
-                        )}>
-                            {isActive ? "Active" : "Completed"}
-                        </small>
+                    {isEncounter && encounter ? (
+                        <>
+                            <p className="text-sm text-neutral-500">
+                                {encounter.date}, {encounter.time}
+                            </p>
+                            <small className={clsx(
+                                "self-end px-2 py-1 rounded-full font-medium",
+                                encounter.status === "active"
+                                    ? "text-success bg-success-light"
+                                    : "text-neutral-500 bg-neutral-200"
+                            )}>
+                                {encounter.status === "active" ? "Active" : "Completed"}
+                            </small>
+                        </>
+                    ) : (
+                        <>
+                            <p className="text-sm text-neutral-500">
+                                {patient.dateOfBirth}
+                            </p>
+                            <small className="text-neutral-500/80 self-end">
+                                {patient.sex}, {patient.age} years
+                            </small>
+                        </>
                     )}
                 </div>
             </div>
