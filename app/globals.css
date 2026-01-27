@@ -74,6 +74,7 @@
   --font-size-xxs: 12px;
   --font-size-xxxs: 10px;
 
+
   --line-height-h1: 1.2;
   --line-height-h2: 1.25;
   --line-height-h3: 1.3;
@@ -162,5 +163,17 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
