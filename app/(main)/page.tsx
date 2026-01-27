@@ -39,7 +39,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="px-5 my-10 space-y-10">
+    <div className="px-4 my-6 space-y-8 sm:px-5 sm:my-10 sm:space-y-10">
       <Hero
         Title="Patients List Directory"
         Subtitle="Overview of hospital operation and recent activity"
@@ -51,7 +51,7 @@ const Home = () => {
           description="Total Patients" 
           percentage={stats.patientGrowthPercentage} 
           notice="from last month" 
-          icon={<UserRound className="w-16 h-16" strokeWidth={2.5} />} 
+          icon={<UserRound className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16" strokeWidth={2.5} />} 
           color="blue"
           requiresAttention="success"
         />
@@ -59,7 +59,7 @@ const Home = () => {
           amount={stats.todaysVisits} 
           description="Today's Visits" 
           notice="updated minutes ago" 
-          icon={<CalendarFold className="w-16 h-16" strokeWidth={2.5} />} 
+          icon={<CalendarFold className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16" strokeWidth={2.5} />} 
           color="green"
         />
         <Card 
@@ -79,8 +79,8 @@ const Home = () => {
         />
       </section>
       <section>
-        <h2 className="text-3xl font-semibold">Quick Actions</h2>
-        <div className="grid grid-cols-4 gap-4 mt-4">
+        <h2 className="text-xl font-semibold sm:text-2xl lg:text-3xl">Quick Actions</h2>
+        <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-4">
           <QuickActions 
             text="Register New Patient" 
             icon={<UserPlus className="w-5 h-5" />} 
@@ -102,7 +102,7 @@ const Home = () => {
             href="/pharmacy"
           />
         </div>
-        <div className="grid grid-cols-2 gap-4 mt-6">
+        <div className="grid grid-cols-1 gap-4 mt-6 lg:grid-cols-2">
           <History isEncounters={false} />
           <History isEncounters={true} />
         </div>
