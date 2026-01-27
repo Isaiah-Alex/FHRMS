@@ -33,6 +33,7 @@ import { mockPatients } from "@/lib/mockData";
 import { useDebouncer } from "@/hooks/useDebouncer";
 import type { Patient } from "@/lib/mockData";
 import { TableCell } from "@/components/ui/table";
+import { useRouter } from "next/navigation";
 
 const PAGE_SIZE = 10;
 
@@ -99,9 +100,10 @@ export default function PatientsPage() {
     setCurrentPage(1);
   };
 
+  const router = useRouter()
   const handleViewProfile = (patientId: string) => {
-    console.log("View profile for patient:", patientId);
-    // Navigation logic will go here
+    router.push(`/patients/${patientId}`);
+    
   };
 
   const handleRegisterPatient = () => {
@@ -144,7 +146,7 @@ export default function PatientsPage() {
           </div>
 
           <Select value={sexFilter} onValueChange={(value) => handleFilterChange(setSexFilter, value)}>
-            <SelectTrigger className="w-full md:w-[180px]">
+            <SelectTrigger className="w-full md:w-45">
               <SelectValue placeholder="Sex" />
             </SelectTrigger>
             <SelectContent>
@@ -156,7 +158,7 @@ export default function PatientsPage() {
           </Select>
 
           <Select value={ageRangeFilter} onValueChange={(value) => handleFilterChange(setAgeRangeFilter, value)}>
-            <SelectTrigger className="w-full md:w-[180px]">
+            <SelectTrigger className="w-full md:w-45">
               <SelectValue placeholder="Age Range" />
             </SelectTrigger>
             <SelectContent>
