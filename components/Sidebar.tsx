@@ -1,5 +1,5 @@
 import NavItem from "./NavItem";
-import { LayoutDashboard, Activity, UsersRound, Stethoscope, FlaskConical, UserRoundCog } from "lucide-react";
+import { LayoutDashboard, Activity, UsersRound, Stethoscope, FlaskConical, UserRoundCog, Search } from "lucide-react";
 
 const Sidebar = () => {
     return (
@@ -30,6 +30,11 @@ const Sidebar = () => {
                 href="/laboratory" 
             />
             <div className="border-t border-primary-middle/30">
+                <NavItem 
+                    icon={<Search className="w-5 h-5" />} 
+                    text="Fhrms" 
+                    href="/fhrms" 
+                />
                 <NavItem 
                     icon={<UserRoundCog className="w-5 h-5" />} 
                     text="Users" 

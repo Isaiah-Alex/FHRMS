@@ -11,7 +11,6 @@ export async function GET(_: Request, { params }: Params) {
   const { patientId } = await params;
   const patient = getPatientById(patientId);
 
-  console.log("Fetched patient:", patient);
   if (!patient) {
     return NextResponse.json({ error: "Patient not found" }, { status: 404 });
   }
