@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { mockPatients, type Patient } from "@/lib/mockData";
+import { FACILITY_ID } from "@/lib/config";
 
 const STORAGE_KEY = "fhrmsPatients";
 const TOAST_KEY = "fhrmsPatientToast";
@@ -93,7 +94,7 @@ export default function PatientRegistrationPage() {
   };
 
   const getNextPatientId = (patients: Patient[]) => {
-    const prefix = "FAC-UBTH-";
+    const prefix = `${FACILITY_ID}-`;
     const existing = new Set(patients.map((patient) => patient.patientId));
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let candidate = "";

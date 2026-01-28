@@ -1,14 +1,53 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Hero from "@/components/Hero";
 import Card from "@/components/Card";
 import { FlaskConical, CalendarFold, UserRound, Stethoscope, UserPlus, Activity } from "lucide-react";
 import QuickActions from "@/components/QuickActions";
 import History from "@/components/History";
 import { patients, encounters, labTests } from "@/lib/database";
+import { HIE_BASE_URL, FACILITY_CODE, FACILITY_API_KEY } from "@/lib/config";
 
 const Home = () => {
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("fhrmsFacilityToken");
+    if (token) {
+      return;
+    }
+    const authenticateFacility = async () => {
+      try {
+        const response = await fetch(`${HIE_BASE_URL}/api/auth/facility/token`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            facility_code: FACILITY_CODE,
+            api_key: FACILITY_API_KEY,
+          }),
+        });
+
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload?.error ?? "Facility authentication failed.");
+        }
+
+        const accessToken = payload?.access_token ?? payload?.token ?? payload?.data?.access_token;
+        if (!accessToken) {
+          throw new Error("Facility token not returned.");
+        }
+
+        window.localStorage.setItem("fhrmsFacilityToken", accessToken);
+      } catch (error) {
+        setToastMessage(error instanceof Error ? error.message : "Facility authentication failed.");
+        setTimeout(() => setToastMessage(null), 3000);
+      }
+    };
+
+    authenticateFacility();
+  }, []);
+
   // Calculate dashboard statistics
   const stats = useMemo(() => {
     // Total patients
@@ -102,6 +141,20 @@ const Home = () => {
           <History isEncounters={true} />
         </div>
       </section>
+      {toastMessage && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-top-2 duration-300">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border bg-warning/90 text-warning-light">
+            <span className="font-medium">{toastMessage}</span>
+            <button
+              onClick={() => setToastMessage(null)}
+              className="ml-2 text-warning-light"
+              aria-label="Close notification"
+            >
+              x
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

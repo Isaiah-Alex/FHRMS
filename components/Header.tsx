@@ -1,6 +1,7 @@
 import Image from "next/image";
 import logo from "@/public/images/logo.svg"
 import doctorIcon from "@/public/images/doctor-icon.svg"
+import { APP_NAME } from "@/lib/config";
 import { ChevronDown } from "lucide-react";
 import Button from "./Button";
 import { LogOut } from "lucide-react";
@@ -18,7 +19,7 @@ const Header = () => {
                             src={logo}
                             alt="FHRMS Logo"
                         />
-                        <h2 className="flex text-2xl font-semibold sm:text-3xl lg:text-4xl">FHRMS</h2>
+                        <h2 className="flex text-2xl font-semibold sm:text-3xl lg:text-4xl">{APP_NAME}</h2>
                     </div>
                 </Link>
                 <div className="flex flex-wrap items-center gap-3 sm:gap-6">

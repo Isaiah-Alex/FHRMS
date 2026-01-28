@@ -1,23 +1,74 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-
-const BASE_URL = process.env.NEXT_PUBLIC_HIE_BASE_URL ?? "http://localhost:8100";
+import { APP_NAME, FACILITY_ID, HIE_BASE_URL, FACILITY_CODE, FACILITY_API_KEY } from "@/lib/config";
 
 export default function FhrmsPage() {
   const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<unknown>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<"error" | "info">("info");
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
+
+  const getFacilityToken = () => window.localStorage.getItem("fhrmsFacilityToken");
+
+  const authenticateFacility = async () => {
+    if (getFacilityToken()) {
+      return;
+    }
+    setIsAuthLoading(true);
+    try {
+      const response = await fetch(`${HIE_BASE_URL}/api/auth/facility/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          facility_code: FACILITY_CODE,
+          api_key: FACILITY_API_KEY,
+        }),
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload?.error ?? "Facility authentication failed.");
+      }
+
+      const token = payload?.access_token ?? payload?.token ?? payload?.data?.access_token;
+      if (!token) {
+        throw new Error("Facility token not returned.");
+      }
+
+      window.localStorage.setItem("fhrmsFacilityToken", token);
+    } catch (error) {
+      setToastType("error");
+      setToastMessage(error instanceof Error ? error.message : "Facility authentication failed.");
+      setTimeout(() => setToastMessage(null), 3000);
+    } finally {
+      setIsAuthLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    authenticateFacility();
+  }, []);
 
   const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!keyword.trim()) {
+      setToastType("error");
       setToastMessage("Please enter a search keyword.");
+      setTimeout(() => setToastMessage(null), 3000);
+      return;
+    }
+
+    const token = getFacilityToken();
+    if (!token) {
+      setToastType("error");
+      setToastMessage("Facility authentication missing. Please refresh this page.");
       setTimeout(() => setToastMessage(null), 3000);
       return;
     }
@@ -26,15 +77,18 @@ export default function FhrmsPage() {
     setResults(null);
 
     try {
-      const response = await fetch(
-        `${BASE_URL}/api/hie/queries?keyword=${encodeURIComponent(keyword.trim())}`
-      );
+      const response = await fetch(`/api/hie/queries?keyword=${encodeURIComponent(keyword.trim())}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) {
         throw new Error("Unable to fetch records. Please try again.");
       }
       const data = await response.json();
       setResults(data);
     } catch (error) {
+      setToastType("error");
       setToastMessage(error instanceof Error ? error.message : "Search failed.");
       setTimeout(() => setToastMessage(null), 3000);
     } finally {
@@ -45,8 +99,8 @@ export default function FhrmsPage() {
   return (
     <div className="px-4 my-6 space-y-6 sm:px-5 sm:my-10">
       <Hero
-        Title="Fhrms Search"
-        Subtitle="Search for patient records by phone number, national ID, or full name to retrieve a complete clinical profile."
+        Title={`${APP_NAME} Search`}
+        Subtitle={`Search for patient records by phone number, national ID, or full name to retrieve a complete clinical profile for ${FACILITY_ID}.`}
         className=""
       />
 
@@ -71,9 +125,9 @@ export default function FhrmsPage() {
           <Button
             type="submit"
             className="bg-primary hover:bg-primary-hover text-white w-full sm:w-auto"
-            disabled={isLoading}
+            disabled={isLoading || isAuthLoading}
           >
-            {isLoading ? "Searching..." : "Search"}
+            {isAuthLoading ? "Authenticating..." : isLoading ? "Searching..." : "Search"}
           </Button>
         </form>
       </div>
@@ -93,11 +147,14 @@ export default function FhrmsPage() {
 
       {toastMessage && (
         <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-top-2 duration-300">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border bg-warning/90 text-warning-light">
+          <div className={`flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border ${toastType === "error"
+              ? "bg-warning/90 text-warning-light"
+              : "bg-primary/90 text-primary-light"
+            }`}>
             <span className="font-medium">{toastMessage}</span>
             <button
               onClick={() => setToastMessage(null)}
-              className="ml-2 text-warning-light"
+              className="ml-2 text-primary-light"
               aria-label="Close notification"
             >
               x

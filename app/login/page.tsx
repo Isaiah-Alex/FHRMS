@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Lock, BadgeCheck } from "lucide-react";
 import { doctors } from "@/lib/database";
+import { APP_NAME, HOSPITAL_NAME } from "@/lib/config";
 
 export default function LoginPage() {
   const [staffId, setStaffId] = useState("");
@@ -32,7 +33,7 @@ export default function LoginPage() {
     }
 
     setToastType("success");
-      setToastMessage(`Welcome back, ${doctor.name}.`);
+    setToastMessage(`Welcome back, ${doctor.name}.`);
     setTimeout(() => {
       setToastMessage(null);
       setIsLoading(false);
@@ -60,7 +61,7 @@ export default function LoginPage() {
           <div className="space-y-6">
             <div>
               <h1 className="text-3xl font-semibold text-neutral-900 mb-2">
-                Welcome Back
+                Welcome Back to {APP_NAME}
               </h1>
               <p className="text-neutral-500 text-base">
                 Sign in to access your account
@@ -161,7 +162,7 @@ export default function LoginPage() {
             />
           </div>
           <h2 className="text-3xl font-semibold text-neutral-900">
-            Federated Hospital Record Management System
+            {HOSPITAL_NAME}
           </h2>
           <p className="text-base text-neutral-500">
             Secure, efficient, and comprehensive healthcare record management
