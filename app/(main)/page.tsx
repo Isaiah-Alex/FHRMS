@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import Hero from "@/components/Hero";
 import Card from "@/components/Card";
-import { FlaskConical, CalendarFold, UserRound, Stethoscope, UserPlus, Pill, Activity } from "lucide-react";
+import { FlaskConical, CalendarFold, UserRound, Stethoscope, UserPlus, Activity } from "lucide-react";
 import QuickActions from "@/components/QuickActions";
 import History from "@/components/History";
 import { patients, encounters, labTests } from "@/lib/database";
@@ -95,11 +95,6 @@ const Home = () => {
             text="View Vitals" 
             icon={<Activity className="w-5 h-5" />} 
             href="/vitals"
-          />
-          <QuickActions 
-            text="Manage Medications" 
-            icon={<Pill className="w-5 h-5" />} 
-            href="/pharmacy"
           />
         </div>
         <div className="grid grid-cols-1 gap-4 mt-6 lg:grid-cols-2">

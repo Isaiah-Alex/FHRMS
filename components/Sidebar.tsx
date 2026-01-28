@@ -1,5 +1,5 @@
 import NavItem from "./NavItem";
-import { LayoutDashboard, Activity, UsersRound, Stethoscope, FlaskConical, Pill, UserRoundCog } from "lucide-react";
+import { LayoutDashboard, Activity, UsersRound, Stethoscope, FlaskConical, UserRoundCog } from "lucide-react";
 
 const Sidebar = () => {
     return (
@@ -28,11 +28,6 @@ const Sidebar = () => {
                 icon={<FlaskConical className="w-5 h-5" />} 
                 text="Laboratory" 
                 href="/laboratory" 
-            />
-            <NavItem 
-                icon={<Pill className="w-5 h-5" />} 
-                text="Pharmacy" 
-                href="/pharmacy" 
             />
             <div className="border-t border-primary-middle/30">
                 <NavItem 
