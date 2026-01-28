@@ -224,8 +224,8 @@ export const patients: Patient[] = [
     },
     {
         id: "3",
-        firstName: "Tunde",
-        lastName: "Adeyemi",
+        firstName: "Emeka",
+        lastName: "Okoye",
         sex: "Male",
         age: 58,
         patientId: "FAC-UBTH-OCTTCB",

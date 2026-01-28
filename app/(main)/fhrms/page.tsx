@@ -96,6 +96,113 @@ export default function FhrmsPage() {
     }
   };
 
+  const renderValue = (value: unknown) => {
+    if (value === null || value === undefined) {
+      return <span className="text-neutral-500">Not available</span>;
+    }
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        return <span className="text-neutral-500">No items</span>;
+      }
+      return (
+        <div className="space-y-3">
+          {value.map((item, index) => (
+            <div key={index} className="border border-neutral-200 rounded-lg p-3">
+              {renderValue(item)}
+            </div>
+          ))}
+        </div>
+      );
+    }
+    if (typeof value === "object") {
+      return (
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {Object.entries(value as Record<string, unknown>).map(([key, entry]) => (
+            <div key={key} className="rounded-md bg-neutral-50 p-2">
+              <p className="text-xs uppercase text-neutral-500">{key.replace(/_/g, " ")}</p>
+              <div className="text-sm text-neutral-900">{renderValue(entry)}</div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return <span className="text-neutral-900">{String(value)}</span>;
+  };
+
+  const renderResults = (payload: Record<string, unknown>) => {
+    const status = payload.status;
+    const mpi = payload.mpi as Record<string, unknown> | undefined;
+    const linkedFacilities = payload.linked_facilities as Array<Record<string, unknown>> | undefined;
+    const facilityResults = payload.facility_results as Array<Record<string, unknown>> | undefined;
+    const facilityErrors = payload.facility_errors as Array<Record<string, unknown>> | undefined;
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-2">
+          <span className="text-sm uppercase text-neutral-500">Status</span>
+          <span className="text-sm font-semibold text-neutral-900">{status ? String(status) : "Unknown"}</span>
+        </div>
+
+        {mpi && (
+          <div className="space-y-3">
+            <h4 className="text-lg font-semibold">MPI Results</h4>
+            {(() => {
+              const { merged, redirect_federated_id, ...rest } = mpi;
+              return renderValue(rest);
+            })()}
+          </div>
+        )}
+
+        {linkedFacilities && (
+          <div className="space-y-3">
+            <h4 className="text-lg font-semibold">Linked Facilities</h4>
+            {renderValue(linkedFacilities)}
+          </div>
+        )}
+
+        {facilityResults && (
+          <div className="space-y-3">
+            <h4 className="text-lg font-semibold">Facility Results</h4>
+            {facilityResults.length === 0 ? (
+              <p className="text-sm text-neutral-500">No facility results returned.</p>
+            ) : (
+              <div className="space-y-4">
+                {facilityResults.map((facility, index) => (
+                  <div key={index} className="border border-neutral-200 rounded-lg p-4 space-y-3">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-semibold text-neutral-900">{String(facility.name ?? "Facility")}</p>
+                      {facility.facility_id && (
+                        <p className="text-xs text-neutral-500">{String(facility.facility_id)}</p>
+                      )}
+                    </div>
+                    <div>{renderValue(facility.data ?? facility)}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {facilityErrors && (
+          <div className="space-y-3">
+            <h4 className="text-lg font-semibold text-warning">Facility Errors</h4>
+            {facilityErrors.length === 0 ? (
+              <p className="text-sm text-neutral-500">No facility errors reported.</p>
+            ) : (
+              <div className="space-y-3">
+                {facilityErrors.map((error, index) => (
+                  <div key={index} className="border border-warning-light bg-warning-light/20 rounded-lg p-3">
+                    {renderValue(error)}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="px-4 my-6 space-y-6 sm:px-5 sm:my-10">
       <Hero
@@ -136,9 +243,11 @@ export default function FhrmsPage() {
         <h3 className="text-lg font-semibold">Search Results</h3>
         {isLoading && <p className="text-sm text-neutral-500">Fetching records...</p>}
         {!isLoading && results && (
-          <pre className="text-sm text-neutral-700 whitespace-pre-wrap break-words">
-            {JSON.stringify(results, null, 2)}
-          </pre>
+          <div className="space-y-4">
+            {typeof results === "object" && results !== null
+              ? renderResults(results as Record<string, unknown>)
+              : renderValue(results)}
+          </div>
         )}
         {!isLoading && !results && (
           <p className="text-sm text-neutral-500">No results yet. Run a search to view records.</p>
