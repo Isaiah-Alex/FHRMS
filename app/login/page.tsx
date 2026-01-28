@@ -6,27 +6,38 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, BadgeCheck } from "lucide-react";
+import { doctors } from "@/lib/database";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [staffId, setStaffId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<"success" | "error">("success");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Placeholder for login logic
-    console.log("Login attempt:", { email, password });
-    
-    // Simulate API call
-    setTimeout(() => {
+    const doctor = doctors.find((item) => item.staffId.toLowerCase() === staffId.trim().toLowerCase());
+    if (!doctor || password !== "1111") {
       setIsLoading(false);
-      router.push("/");
-    }, 1000);
+      setToastType("error");
+      setToastMessage("Invalid staff ID or password. Please try again.");
+      setTimeout(() => setToastMessage(null), 3000);
+      return;
+    }
+
+    setToastType("success");
+      setToastMessage(`Welcome back, ${doctor.name}.`);
+    setTimeout(() => {
+      setToastMessage(null);
+      setIsLoading(false);
+      router.push("/dashboard");
+    }, 900);
   };
 
   return (
@@ -57,17 +68,17 @@ export default function LoginPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Email Field */}
+              {/* Staff ID Field */}
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="staffId">Staff ID</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                  <BadgeCheck className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                   <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    id="staffId"
+                    type="text"
+                    placeholder="Enter your staff ID"
+                    value={staffId}
+                    onChange={(e) => setStaffId(e.target.value)}
                     required
                     className="pl-10"
                   />
@@ -139,8 +150,8 @@ export default function LoginPage() {
       </div>
 
       {/* Right Side - Image/Illustration */}
-      <div className="hidden lg:flex flex-1 bg-primary-middle items-center justify-center p-12">
-        <div className="max-w-md text-center space-y-6">
+        <div className="hidden lg:flex flex-1 bg-primary-middle items-center justify-center p-12">
+          <div className="max-w-md text-center space-y-6">
           <div className="flex justify-center">
             <Image
               src="/images/doctor-icon.svg"
@@ -157,6 +168,24 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
+
+      {toastMessage && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-top-2 duration-300">
+          <div className={`flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border ${toastType === "success"
+              ? "bg-primary/90 text-primary-light"
+              : "bg-warning/90 text-warning-light"
+            }`}>
+            <span className="font-medium">{toastMessage}</span>
+            <button
+              onClick={() => setToastMessage(null)}
+              className="ml-2 text-primary-light"
+              aria-label="Close notification"
+            >
+              x
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

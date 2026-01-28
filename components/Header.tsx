@@ -10,7 +10,7 @@ const Header = () => {
     return (
         <div className="w-full bg-white px-4 py-3 shadow-md sm:px-6 lg:px-8">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <Link href="/">
+                <Link href="/dashboard">
                     <div className="flex items-center gap-3">
                         <Image
                             width={42}
@@ -29,12 +29,12 @@ const Header = () => {
                             width={16}
                             height={16}
                         />
-                        <p className="font-semibold">Dr Sarah Johnson</p>
+                        <p className="font-semibold">Dr Amina Yusuf</p>
                         <span className="hidden sm:inline text-neutral-500">|</span>
                         <p className="hidden sm:inline text-neutral-500">Physician</p>
                     </div>
                     <div className="flex items-center gap-1 hover:bg-neutral-100 py-1.5 px-2 rounded-lg cursor-pointer">
-                        <span className="flex h-8 w-8 items-center justify-center text-sm font-semibold text-center bg-primary rounded-full text-primary-light">SJ</span>
+                        <span className="flex h-8 w-8 items-center justify-center text-sm font-semibold text-center bg-primary rounded-full text-primary-light">AY</span>
                         <ChevronDown className="text-neutral-500"/>
                     </div>
                     <Link href="/login"><Button text="Logout" icon={<LogOut />} /></Link>

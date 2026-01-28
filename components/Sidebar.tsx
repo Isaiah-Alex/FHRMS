@@ -7,7 +7,7 @@ const Sidebar = () => {
             <NavItem 
                 icon={<LayoutDashboard className="w-5 h-5" />} 
                 text="Dashboard" 
-                href="/" 
+                href="/dashboard" 
             />
             <NavItem 
                 icon={<UsersRound className="w-5 h-5" />} 

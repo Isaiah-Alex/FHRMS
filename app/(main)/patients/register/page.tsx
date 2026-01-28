@@ -154,7 +154,7 @@ export default function PatientRegistrationPage() {
         relationship: formState.emergencyContactRelationship.trim(),
         phone: formState.emergencyContactPhone.trim(),
       },
-      primaryCareProvider: "Dr. Sarah Johnson",
+      primaryCareProvider: "Dr. Amina Yusuf",
       insuranceProvider: "Not Specified",
       policyNumber: "Not Specified",
       lastUpdatedBy: "System",
