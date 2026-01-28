@@ -6,9 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import NameProfile from "@/components/NameProfile";
 import {
     Activity,
-    FlaskConical,
-    History,
-    Pill,
+  History,
     Stethoscope,
     User,
 } from "lucide-react";
@@ -27,9 +25,7 @@ const tabs = [
     { id: "demographics", label: "Demographics", icon: User, path: (id: string) => `/patients/${id}` },
     { id: "encounters", label: "Encounters", icon: Stethoscope, path: (id: string) => `/patients/${id}/encounters` },
     { id: "vitals", label: "Vitals", icon: Activity, path: (id: string) => `/patients/${id}/vitals` },
-    { id: "lab-results", label: "Lab Results", icon: FlaskConical, path: (id: string) => `/patients/${id}/laboratory` },
-    { id: "medications", label: "Medications", icon: Pill, path: (id: string) => `/patients/${id}/medications` },
-    { id: "medical-history", label: "Medical History", icon: History, path: (id: string) => `/patients/${id}/history` },
+  { id: "medical-history", label: "Medical History", icon: History, path: (id: string) => `/patients/${id}/history` },
 ];
 
 export default function PatientHistoryPage() {

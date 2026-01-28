@@ -9,8 +9,6 @@ import {
     User,
     Calendar,
     Activity,
-    FlaskConical,
-    Pill,
     History,
     Pencil,
     Upload,
@@ -44,8 +42,6 @@ export default function PatientProfilePage() {
         { id: "demographics", label: "Demographics", icon: User, path: null },
         { id: "encounters", label: "Encounters", icon: Stethoscope, path: `/patients/${patientId}/encounters` },
         { id: "vitals", label: "Vitals", icon: Activity, path: `/patients/${patientId}/vitals` },
-        { id: "lab-results", label: "Lab Results", icon: FlaskConical, path: `/patients/${patientId}/laboratory` },
-        { id: "medications", label: "Medications", icon: Pill, path: `/patients/${patientId}/medications` },
         { id: "medical-history", label: "Medical History", icon: History, path: `/patients/${patientId}/history` },
     ];
 
