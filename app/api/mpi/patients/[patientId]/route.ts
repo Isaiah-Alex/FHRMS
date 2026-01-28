@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPatientById } from "@/lib/database";
+import { getPatientById, patients } from "@/lib/database";
 
 type Params = {
   params: Promise<{
@@ -9,7 +9,8 @@ type Params = {
 
 export async function GET(_: Request, { params }: Params) {
   const { patientId } = await params;
-  const patient = getPatientById(patientId);
+  const matched = patients.find((item) => item.patientId === patientId);
+  const patient = matched ? getPatientById(matched.id) : undefined;
 
   if (!patient) {
     return NextResponse.json({ error: "Patient not found" }, { status: 404 });

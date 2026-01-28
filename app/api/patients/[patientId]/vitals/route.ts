@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getVitalsByPatient, type VitalRecord } from "@/lib/database";
+import { getVitalsByPatient, patients, type VitalRecord } from "@/lib/database";
 
 type Params = {
   params: Promise<{
@@ -9,8 +9,14 @@ type Params = {
 
 const vitalsStore: Record<string, VitalRecord[]> = {};
 
+const resolvePatientId = (patientId: string) => {
+  const matched = patients.find((item) => item.patientId === patientId);
+  return matched?.id ?? "";
+};
+
 const normalizeVitals = (patientId: string) => {
-  const baseVitals = getVitalsByPatient(patientId);
+  const resolvedId = resolvePatientId(patientId);
+  const baseVitals = resolvedId ? getVitalsByPatient(resolvedId) : [];
   const storedVitals = vitalsStore[patientId] ?? [];
   return [...storedVitals, ...baseVitals];
 };
@@ -33,6 +39,10 @@ export async function GET(_: Request, { params }: Params) {
 
 export async function POST(request: Request, { params }: Params) {
   const { patientId } = await params;
+  const resolvedId = resolvePatientId(patientId);
+  if (!resolvedId) {
+    return NextResponse.json({ error: "Patient not found" }, { status: 404 });
+  }
   const body = await request.json();
 
   const requiredFields = [
@@ -56,7 +66,7 @@ export async function POST(request: Request, { params }: Params) {
 
   const newRecord: VitalRecord = {
     id: `VR-${Date.now()}`,
-    patientId,
+    patientId: resolvedId,
     date,
     time,
     bloodPressureSystolic: Number(body.bloodPressureSystolic),

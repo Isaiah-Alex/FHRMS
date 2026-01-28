@@ -93,12 +93,16 @@ export default function PatientRegistrationPage() {
   };
 
   const getNextPatientId = (patients: Patient[]) => {
-    const numbers = patients.map((patient) => {
-      const match = patient.patientId.match(/PT-2024-(\d+)/);
-      return match ? parseInt(match[1], 10) : 0;
-    });
-    const maxNumber = numbers.length ? Math.max(...numbers) : 0;
-    return `PT-2024-${String(maxNumber + 1).padStart(3, "0")}`;
+    const prefix = "FAC-UBTH-";
+    const existing = new Set(patients.map((patient) => patient.patientId));
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let candidate = "";
+    do {
+      candidate = Array.from({ length: 6 }, () =>
+        alphabet[Math.floor(Math.random() * alphabet.length)]
+      ).join("");
+    } while (existing.has(`${prefix}${candidate}`));
+    return `${prefix}${candidate}`;
   };
 
   const getNextProfileColor = (patients: Patient[]) => {
