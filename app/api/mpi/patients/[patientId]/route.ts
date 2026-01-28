@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPatientById, patients } from "@/lib/database";
+import { getMedicalHistoryByPatient, getPatientById, patients } from "@/lib/database";
 
 type Params = {
   params: Promise<{
@@ -16,5 +16,12 @@ export async function GET(_: Request, { params }: Params) {
     return NextResponse.json({ error: "Patient not found" }, { status: 404 });
   }
 
-  return NextResponse.json({ data: patient });
+  const medicalHistory = getMedicalHistoryByPatient(patient.id);
+
+  return NextResponse.json({
+    data: {
+      ...patient,
+      medicalHistory,
+    },
+  });
 }

@@ -1157,7 +1157,7 @@ export const medicalHistoryEntries: MedicalHistoryEntry[] = [
     },
     {
         id: "MH-005",
-        patientId: "5",
+        patientId: "3",
         date: "2022-11-05",
         condition: "Asthma",
         status: "chronic",

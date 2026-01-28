@@ -96,7 +96,10 @@ export default function FhrmsPage() {
     }
   };
 
-  const renderValue = (value: unknown) => {
+  const renderValue = (
+    value: unknown,
+    options?: { fullWidth?: boolean; columns?: 1 | 2 | 3 }
+  ) => {
     if (value === null || value === undefined) {
       return <span className="text-neutral-500">Not available</span>;
     }
@@ -105,22 +108,29 @@ export default function FhrmsPage() {
         return <span className="text-neutral-500">No items</span>;
       }
       return (
-        <div className="space-y-3">
+        <div className="space-y-3 w-full">
           {value.map((item, index) => (
-            <div key={index} className="border border-neutral-200 rounded-lg p-3">
-              {renderValue(item)}
+            <div key={index} className="border border-neutral-200 rounded-lg p-3 w-full">
+              {renderValue(item, options)}
             </div>
           ))}
         </div>
       );
     }
     if (typeof value === "object") {
+      const columns = options?.columns ?? (options?.fullWidth ? 1 : 2);
+      const gridClassName =
+        columns === 1
+          ? "grid w-full grid-cols-1 gap-3"
+          : columns === 3
+            ? "grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            : "grid w-full grid-cols-1 gap-3 sm:grid-cols-2";
       return (
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div className={gridClassName}>
           {Object.entries(value as Record<string, unknown>).map(([key, entry]) => (
-            <div key={key} className="rounded-md bg-neutral-50 p-2">
+            <div key={key} className="rounded-md bg-neutral-50 p-3">
               <p className="text-xs uppercase text-neutral-500">{key.replace(/_/g, " ")}</p>
-              <div className="text-sm text-neutral-900">{renderValue(entry)}</div>
+              <div className="text-sm text-neutral-900">{renderValue(entry, options)}</div>
             </div>
           ))}
         </div>
@@ -156,7 +166,7 @@ export default function FhrmsPage() {
         {linkedFacilities && (
           <div className="space-y-3">
             <h4 className="text-lg font-semibold">Linked Facilities</h4>
-            {renderValue(linkedFacilities)}
+            {renderValue(linkedFacilities, { columns: 2 })}
           </div>
         )}
 
@@ -175,7 +185,7 @@ export default function FhrmsPage() {
                         <p className="text-xs text-neutral-500">{String(facility.facility_id)}</p>
                       )}
                     </div>
-                    <div>{renderValue(facility.data ?? facility)}</div>
+                    <div className="w-full">{renderValue(facility.data ?? facility, { columns: 2 })}</div>
                   </div>
                 ))}
               </div>
