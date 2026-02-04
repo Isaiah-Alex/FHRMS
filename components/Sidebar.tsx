@@ -32,7 +32,7 @@ const Sidebar = () => {
             <div className="border-t border-primary-middle/30">
                 <NavItem 
                     icon={<Search className="w-5 h-5" />} 
-                    text="Fhrms" 
+                    text="FHRMS" 
                     href="/fhrms" 
                 />
                 <NavItem 

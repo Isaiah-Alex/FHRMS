@@ -216,7 +216,7 @@ export default function FhrmsPage() {
   return (
     <div className="px-4 my-6 space-y-6 sm:px-5 sm:my-10">
       <Hero
-        Title={`${APP_NAME} Search`}
+        Title={`FHRMS Search`}
         Subtitle={`Search for patient records by phone number, national ID, or full name to retrieve a complete clinical profile for ${FACILITY_ID}.`}
         className=""
       />
